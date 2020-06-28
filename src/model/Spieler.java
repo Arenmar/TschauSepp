@@ -1,7 +1,9 @@
+package model;
+
 import java.util.Vector;
 
 /**
- * model.Spieler
+ * model.model.Spieler
  *
  * @Author: Martin Arendar
  * @Version: 1.0
@@ -46,6 +48,10 @@ public class Spieler {
 
 	public void fuegePunkteHinzu(Spieler spieler, int punkte) {
 
+	}
+
+	public Vector<Karte> getKarten() {
+		return hand;
 	}
 
 	/*

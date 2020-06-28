@@ -1,5 +1,9 @@
+package model;
+
+import java.util.Vector;
+
 /**
- * model.Spiel
+ * model.model.Spiel
  *
  * @Author: Martin Arendar
  * @Version: 1.0
@@ -12,9 +16,10 @@ public class Spiel {
 	private Spieler spieler;
 	private Spielstapel spielstapel;
 	private Karte letzteKarte;
+	private Vector<Spieler> spielerListe;
 
 	public Spiel() {
-
+		spielerListe = new Vector<>();
 	}
 
 	public void naechsterSpieler() {
@@ -69,8 +74,8 @@ public class Spiel {
 		return anzKartenZuZiehen;
 	}
 
-	public Spieler getSpieler() {
-		return spieler;
+	public Vector<Spieler> getSpieler() {
+		return spielerListe;
 	}
 
 	public Spielstapel getSpielstapel() {

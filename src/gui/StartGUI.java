@@ -1,3 +1,8 @@
+package gui;
+
+import model.Spiel;
+import model.Spieler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,12 +22,13 @@ public class StartGUI extends JFrame {
 	private Spiel spiel;
 	private Spieler spieler;
 	private Vector<Spieler> spielerVector = new Vector<Spieler>();
+	private GameGUI gameGUI;
 
 	private JLabel alleSpieler;
 
 	private JTextField name;
 
-	private JButton spielerHinzufuegen;
+	private JButton spielerHinzufuegen, spielStarten;
 
 	private JPanel mainPanel, spielerHinzufuegenPanel, alleSpielerPanel;
 
@@ -50,9 +56,16 @@ public class StartGUI extends JFrame {
 			}
 		});
 
+		spielStarten = new JButton("Start");
+		spielStarten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onSpielStarten(e);
+			}
+		});
+
 		init();
 		pack();
-		setSize(500, 500);
+		setSize(500,500);
 		setVisible(true);
 	}
 
@@ -61,6 +74,7 @@ public class StartGUI extends JFrame {
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(alleSpielerPanel, BorderLayout.CENTER);
 		mainPanel.add(spielerHinzufuegenPanel, BorderLayout.NORTH);
+		mainPanel.add(spielStarten, BorderLayout.SOUTH);
 
 		alleSpielerPanel.setLayout(new GridLayout(4,1));
 
@@ -70,7 +84,7 @@ public class StartGUI extends JFrame {
 	}
 
 	public void onSpielerHinzufuegen(ActionEvent e) {
-		if (name.equals(null)) {
+		if (name.getText().equals("")) {
 			name.setText("Bitte Name eingeben");
 		} else {
 			spielerVector.add(new Spieler(name.getText()));
@@ -78,5 +92,9 @@ public class StartGUI extends JFrame {
 			name.setText(null);
 			alleSpielerPanel.revalidate();
 		}
+	}
+
+	public void onSpielStarten(ActionEvent e) {
+		gameGUI = new GameGUI(this, spiel, spieler);
 	}
 }

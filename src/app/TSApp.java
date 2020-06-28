@@ -1,5 +1,10 @@
+package app;
+
+import gui.StartGUI;
+import model.Spiel;
+
 /**
- * TSApp
+ * app.TSApp
  *
  * @Author: Martin Arendar
  * @Version: 1.0
