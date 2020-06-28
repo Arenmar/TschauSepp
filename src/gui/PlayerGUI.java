@@ -64,7 +64,6 @@ public class PlayerGUI extends JPanel {
 			imageIcon = new ImageIcon(newimg);
 			defaultListModel.addElement(imageIcon);
 		}
-
 		init();
 	}
 

@@ -21,7 +21,7 @@ public class GameGUI extends JDialog {
 	private Spieler spieler;
 	private JButton legen, ziehen, aussetzen, rufeTschau, rufeSepp;
 
-	private JPanel mainPanel;
+	private JPanel mainPanel, kartenPanel;
 
 	public GameGUI (JFrame parent, Spiel spiel, Vector<Spieler> spielerVector) {
 
@@ -32,25 +32,53 @@ public class GameGUI extends JDialog {
 		rufeSepp = new JButton();
 
 		mainPanel = new JPanel();
+		kartenPanel = new JPanel();
+		kartenPanel.setBackground(Color.CYAN);
 
 		init();
 
-		for (int i = 0; i < 9; i++) {
-
-			if (i == 0) {
+		switch (spielerVector.size()) {
+			case 1:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(i, spielerVector));
-			} else if (i == 1) {
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(i, spielerVector));
-			} else if (i == 2) {
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(i, spielerVector));
-			} else if (i == 3) {
+				mainPanel.add(kartenPanel);
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(i, spielerVector));
 				mainPanel.add(new JPanel());
-			}
+				mainPanel.add(new JPanel());
+				mainPanel.add(new JPanel());
+				break;
+			case 2:
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
+				mainPanel.add(new JPanel());
+				mainPanel.add(kartenPanel);
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
+				mainPanel.add(new JPanel());
+				mainPanel.add(new JPanel());
+			case 3:
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
+				mainPanel.add(new JPanel());
+				mainPanel.add(kartenPanel);
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
+			case 4:
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(kartenPanel);
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(spielerVector.size(), spielerVector));
+				mainPanel.add(new JPanel());
 		}
 
 		setSize(500,500);
