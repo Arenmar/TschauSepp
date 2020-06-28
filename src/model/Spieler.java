@@ -30,7 +30,7 @@ public class Spieler {
 		return hand.size();
 	}
 
-	public void fuegeKarteZuHandHinzu(Spieler spieler, Vector<Karte> hand) {
+	public void fuegeKarteZuHandHinzu(Karte karte) {
 
 	}
 

@@ -2,6 +2,7 @@ package gui;
 
 import model.Spiel;
 import model.Spieler;
+import model.Spielstapel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class StartGUI extends JFrame {
 
 	private Spiel spiel;
 	private Spieler spieler;
+	private Spielstapel spielstapel;
 	private Vector<Spieler> spielerVector = new Vector<Spieler>();
 	private GameGUI gameGUI;
 	private ErrorGUI errorGUI;
@@ -88,10 +90,22 @@ public class StartGUI extends JFrame {
 		if (name.getText().equals("")) {
 			errorGUI = new ErrorGUI(this);
 		} else {
+			/*
 			spielerVector.add(new Spieler(name.getText()));
 			alleSpielerPanel.add(new JLabel(name.getText()));
 			name.setText(null);
 			alleSpielerPanel.revalidate();
+			*/
+
+			Spieler spieler = new Spieler(name.getText());
+			spielerVector.add(spieler);
+			alleSpielerPanel.add(new JLabel(name.getText()));
+			name.setText(null);
+			alleSpielerPanel.revalidate();
+
+			for (int i = 0; i < 7; i++) {
+				spieler.fuegeKarteZuHandHinzu(spielstapel.zufaelligeKarte());
+			}
 		}
 	}
 
