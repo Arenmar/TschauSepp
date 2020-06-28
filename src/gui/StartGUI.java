@@ -23,6 +23,7 @@ public class StartGUI extends JFrame {
 	private Spieler spieler;
 	private Vector<Spieler> spielerVector = new Vector<Spieler>();
 	private GameGUI gameGUI;
+	private ErrorGUI errorGUI;
 
 	private JLabel alleSpieler;
 
@@ -85,7 +86,7 @@ public class StartGUI extends JFrame {
 
 	public void onSpielerHinzufuegen(ActionEvent e) {
 		if (name.getText().equals("")) {
-			name.setText("Bitte Name eingeben");
+			errorGUI = new ErrorGUI(this);
 		} else {
 			spielerVector.add(new Spieler(name.getText()));
 			alleSpielerPanel.add(new JLabel(name.getText()));
@@ -95,6 +96,6 @@ public class StartGUI extends JFrame {
 	}
 
 	public void onSpielStarten(ActionEvent e) {
-		gameGUI = new GameGUI(this, spiel, spieler);
+		gameGUI = new GameGUI(this, spiel, spielerVector);
 	}
 }

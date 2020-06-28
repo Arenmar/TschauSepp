@@ -5,6 +5,7 @@ import model.Spieler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Vector;
 
 /**
  * gui.GameGUI
@@ -22,7 +23,7 @@ public class GameGUI extends JDialog {
 
 	private JPanel mainPanel;
 
-	public GameGUI(JFrame parent, Spiel spiel, Spieler spieler) {
+	public GameGUI (JFrame parent, Spiel spiel, Vector<Spieler> spielerVector) {
 
 		legen = new JButton();
 		ziehen = new JButton();
@@ -33,6 +34,25 @@ public class GameGUI extends JDialog {
 		mainPanel = new JPanel();
 
 		init();
+
+		for (int i = 0; i < 9; i++) {
+
+			if (i == 0) {
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(i, spielerVector));
+			} else if (i == 1) {
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(i, spielerVector));
+			} else if (i == 2) {
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(i, spielerVector));
+			} else if (i == 3) {
+				mainPanel.add(new JPanel());
+				mainPanel.add(new PlayerGUI(i, spielerVector));
+				mainPanel.add(new JPanel());
+			}
+		}
+
 		setSize(500,500);
 		setVisible(true);
 	}

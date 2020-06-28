@@ -2,6 +2,7 @@ package gui;
 
 import model.Karte;
 import model.Spiel;
+import model.Spieler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,6 @@ import java.util.Vector;
 
 public class PlayerGUI extends JPanel {
 
-	private Spiel spiel;
 	private int index;
 
 	private JPanel mainPanel, kartenPanel, buttonPanel;
@@ -28,15 +28,14 @@ public class PlayerGUI extends JPanel {
 
 	private JScrollPane scrollPane;
 
-	private JList cardList;
+	private JList kartenListe;
 
 	private Vector<Karte> karten;
 
 	private DefaultListModel defaultListModel;
 
-	public PlayerGUI(Spiel spiel, int index) {
+	public PlayerGUI(int index, Vector<Spieler> spielerVector) {
 
-		this.spiel = spiel;
 		this.index = index;
 
 		mainPanel = new JPanel(new BorderLayout());
@@ -48,16 +47,41 @@ public class PlayerGUI extends JPanel {
 		rufeTschau = new JButton("Tschau");
 		rufeSepp = new JButton("Sepp");
 
-		punkte = new JLabel();
-		name = new JLabel();
+		punkte = new JLabel(String.valueOf(spielerVector.get(index).getPunkte()));
+		name = new JLabel(spielerVector.get(index).getName());
 		karte = new JLabel();
 
+		scrollPane = new JScrollPane();
+
 		defaultListModel = new DefaultListModel();
-		cardList = new JList(defaultListModel);
+		kartenListe = new JList(defaultListModel);
 
-		for (Karte karte : spiel.getSpieler().get(index).getKarten()) {
+		for (Karte karte : spielerVector.get(index).getKarten()) {
 
-			ImageIcon imageIcon = new ImageIcon(karte)
+			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
+			Image image = imageIcon.getImage();
+			Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			defaultListModel.addElement(imageIcon);
 		}
+
+		init();
+	}
+
+	public void init() {
+
+		this.add(mainPanel);
+
+		mainPanel.add(kartenPanel, BorderLayout.CENTER);
+		mainPanel.add(buttonPanel, BorderLayout.EAST);
+		mainPanel.add(name, BorderLayout.NORTH);
+		mainPanel.add(punkte, BorderLayout.SOUTH);
+
+		kartenPanel.add(scrollPane);
+
+		buttonPanel.add(legen);
+		buttonPanel.add(ziehen);
+		buttonPanel.add(rufeTschau);
+		buttonPanel.add(rufeSepp);
 	}
 }

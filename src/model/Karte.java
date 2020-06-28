@@ -12,11 +12,11 @@ import java.net.URL;
 
 public class Karte {
 
-	private String bezeichnung;
+	private String bezeichnung, zahl;
 	private int wert;
 	private URL pfad;
 
-	public Karte(String bezeichnung, int wert, URL pfad) {
+	public Karte(String bezeichnung, String zahl, int wert, URL pfad) {
 		this.bezeichnung = bezeichnung;
 		this.wert = wert;
 		this.pfad = pfad;
