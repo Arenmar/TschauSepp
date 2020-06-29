@@ -2,7 +2,7 @@ package gui;
 
 import model.Spiel;
 import model.Spieler;
-import model.Spielstapel;
+import model.Stapel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class StartGUI extends JFrame {
 
 	private Spiel spiel;
 	private Spieler spieler;
-	private Spielstapel spielstapel;
+	private Stapel austeilstapel, spielstapel;
 	private Vector<Spieler> spielerVector = new Vector<Spieler>();
 	private GameGUI gameGUI;
 	private ErrorGUI errorGUI;
@@ -42,7 +42,8 @@ public class StartGUI extends JFrame {
 		super("Tschau Sepp");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		spielstapel = new Spielstapel();
+		austeilstapel = new Stapel();
+		spielstapel = new Stapel();
 
 		cntr = 0;
 
@@ -56,6 +57,7 @@ public class StartGUI extends JFrame {
 
 		spielerHinzufuegen = new JButton("+");
 		spielerHinzufuegen.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				onSpielerHinzufuegen(e);
 			}
@@ -63,6 +65,7 @@ public class StartGUI extends JFrame {
 
 		spielStarten = new JButton("Start");
 		spielStarten.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				onSpielStarten(e);
 			}
@@ -99,13 +102,13 @@ public class StartGUI extends JFrame {
 			alleSpielerPanel.revalidate();
 
 			for (int i = 0; i < 7; i++) {
-				spieler.fuegeKarteZuHandHinzu(spielstapel.zufaelligeKarte());
-				System.out.println(spielstapel.zufaelligeKarte().getPfad());
+				spieler.fuegeKarteZuHandHinzu(austeilstapel.zufaelligeKarte());
+				//System.out.println(austeilstapel.zufaelligeKarte().getPfad()); <-- Zum debuggen, gibt Pfad der Karten aus welche zu Spielerhand hinzugefügt werden
 			}
 		}
 	}
 
 	public void onSpielStarten(ActionEvent e) {
-		gameGUI = new GameGUI(this, spiel, spielerVector);
+		gameGUI = new GameGUI(this, spiel, spielerVector, spielstapel);
 	}
 }

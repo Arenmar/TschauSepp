@@ -14,7 +14,7 @@ public class Spiel {
 
 	private int aktuellerSpieler, anzSpieler, anzKartenZuZiehen;
 	private Spieler spieler;
-	private Spielstapel spielstapel;
+	private Stapel stapel;
 	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
 
@@ -78,8 +78,8 @@ public class Spiel {
 		return spielerListe;
 	}
 
-	public Spielstapel getSpielstapel() {
-		return spielstapel;
+	public Stapel getStapel() {
+		return stapel;
 	}
 
 	public Karte getLetzteKarte() {

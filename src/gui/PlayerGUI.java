@@ -1,11 +1,13 @@
 package gui;
 
 import model.Karte;
-import model.Spiel;
 import model.Spieler;
+import model.Stapel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.Vector;
 
@@ -25,7 +27,7 @@ public class PlayerGUI extends JPanel {
 
 	private JButton legen, ziehen, rufeTschau, rufeSepp;
 
-	private JLabel punkte, name, karte;
+	private JLabel punkte, name;
 
 	private JScrollPane scrollPane;
 
@@ -33,7 +35,7 @@ public class PlayerGUI extends JPanel {
 
 	private DefaultListModel defaultListModel;
 
-	public PlayerGUI(int index, Vector<Spieler> spielerVector) {
+	public PlayerGUI(int index, Vector<Spieler> spielerVector, Stapel spielstapel) {
 
 		this.index = index;
 
@@ -43,12 +45,18 @@ public class PlayerGUI extends JPanel {
 
 		legen = new JButton("Legen");
 		ziehen = new JButton("Ziehen");
+		ziehen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onZiehen(e, spielstapel, spielerVector);
+			}
+		});
+
 		rufeTschau = new JButton("Tschau");
 		rufeSepp = new JButton("Sepp");
 
 		punkte = new JLabel(String.valueOf(spielerVector.get(index).getPunkte()));
 		name = new JLabel(spielerVector.get(index).getName());
-		karte = new JLabel();
 
 		defaultListModel = new DefaultListModel();
 		kartenListe = new JList(defaultListModel);
@@ -86,5 +94,10 @@ public class PlayerGUI extends JPanel {
 		buttonPanel.add(ziehen);
 		buttonPanel.add(rufeTschau);
 		buttonPanel.add(rufeSepp);
+	}
+
+	public void onZiehen(ActionEvent e, Stapel spielstapel, Vector<Spieler> spielerVector) {
+
+		 //spielerVector.get()spielstapel.getObersteKarte()
 	}
 }

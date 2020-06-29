@@ -1,21 +1,25 @@
 package model;
 
+import javax.swing.*;
+import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.Vector;
 
 /**
- * model.model.Spielstapel
+ * model.model.Stapel
  *
  * @Author: Martin Arendar
  * @Version: 1.0
  * @Date: 27-06-2020
  */
 
-public class Spielstapel {
+public class Stapel {
 
 	private Vector<Karte> karten;
 
-	public Spielstapel () {
+	public Stapel() {
 		karten = new Vector<Karte>();
 
 		neuerStapel();
@@ -66,7 +70,12 @@ public class Spielstapel {
 		karten.add(new Karte("Schilten", "Ass", 11, getClass().getResource("../cards/schilten14.gif")));
 	}
 
+	public void loadBack() {
+
+	}
+
 	public Karte zufaelligeKarte() {
+
 		int wert = (int) Math.random() * karten.size();
 
 		Karte temp = karten.get(wert);
@@ -75,11 +84,33 @@ public class Spielstapel {
 		return temp;
 	}
 
+	public ImageIcon getObersteKarte() {
+
+		ImageIcon imageIcon = new ImageIcon(karten.get(0).getPfad());
+		Image image = imageIcon.getImage();
+		Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
+		imageIcon = new ImageIcon(newimg);
+
+		return imageIcon;
+	}
+
+	public ImageIcon getBackside() {
+
+		URL url = getClass().getResource("../cards/back.jpg");
+
+		ImageIcon imageIcon = new ImageIcon(url);
+		Image image = imageIcon.getImage();
+		Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
+		imageIcon = new ImageIcon(newimg);
+
+		return imageIcon;
+	}
+
 	/* Zum Debugen (gibt den Pfad aller Karten aus:
 	public static void main(String[] args) {
 
 
-		Spielstapel spielstapel = new Spielstapel();
+		Stapel spielstapel = new Stapel();
 		spielstapel.print();
 	}
 

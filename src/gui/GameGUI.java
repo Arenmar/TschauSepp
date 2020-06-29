@@ -1,7 +1,9 @@
 package gui;
 
+import model.Karte;
 import model.Spiel;
 import model.Spieler;
+import model.Stapel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +23,11 @@ public class GameGUI extends JDialog {
 	private Spieler spieler;
 	private JButton legen, ziehen, aussetzen, rufeTschau, rufeSepp;
 
-	private JPanel mainPanel, kartenPanel;
+	private JPanel mainPanel, kartenPanel, spielstapelPanel, ablagestapelPanel;
 
-	public GameGUI (JFrame parent, Spiel spiel, Vector<Spieler> spielerVector) {
+	private JLabel obersteKarte, backside;
+
+	public GameGUI (JFrame parent, Spiel spiel, Vector<Spieler> spielerVector, Stapel spielstapel) {
 
 		legen = new JButton();
 		ziehen = new JButton();
@@ -33,14 +37,43 @@ public class GameGUI extends JDialog {
 
 		mainPanel = new JPanel();
 		kartenPanel = new JPanel();
-		kartenPanel.setBackground(Color.CYAN);
+		spielstapelPanel = new JPanel();
+		ablagestapelPanel = new JPanel();
 
+		obersteKarte = new JLabel();
+		backside = new JLabel();
+
+		playerSetup(spielerVector, spielstapel);
 		init();
+		gameSetup();
+		pack();
+		setVisible(true);
+	}
+
+	public void init() {
+
+		getContentPane().add(mainPanel);
+		mainPanel.setLayout(new GridLayout(3,3));
+
+		kartenPanel.setLayout(new GridLayout(1,2));
+		kartenPanel.add(ablagestapelPanel);
+		kartenPanel.add(spielstapelPanel);
+
+		ablagestapelPanel.add(obersteKarte);
+
+		obersteKarte.setIcon(gameSetup());
+
+		spielstapelPanel.add(backside);
+
+		backside.setIcon(getBackside());
+	}
+
+	public void playerSetup(Vector<Spieler> spielerVector, Stapel spielstapel) {
 
 		switch (spielerVector.size()) {
 			case 1:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielerVector));
+				mainPanel.add(new PlayerGUI(0, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(kartenPanel);
@@ -51,45 +84,51 @@ public class GameGUI extends JDialog {
 				break;
 			case 2:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielerVector));
+				mainPanel.add(new PlayerGUI(0, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(kartenPanel);
-				mainPanel.add(new PlayerGUI(1, spielerVector));
+				mainPanel.add(new PlayerGUI(1, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				break;
 			case 3:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielerVector));
+				mainPanel.add(new PlayerGUI(0, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(kartenPanel);
-				mainPanel.add(new PlayerGUI(1, spielerVector));
+				mainPanel.add(new PlayerGUI(1, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(2, spielerVector));
+				mainPanel.add(new PlayerGUI(2, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
 				break;
 			case 4:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielerVector));
+				mainPanel.add(new PlayerGUI(0, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(1, spielerVector));
+				mainPanel.add(new PlayerGUI(1, spielerVector, spielstapel));
 				mainPanel.add(kartenPanel);
-				mainPanel.add(new PlayerGUI(2, spielerVector));
+				mainPanel.add(new PlayerGUI(2, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(3, spielerVector));
+				mainPanel.add(new PlayerGUI(3, spielerVector, spielstapel));
 				mainPanel.add(new JPanel());
 				break;
 		}
-
-		pack();
-		setVisible(true);
 	}
 
-	public void init() {
-		getContentPane().add(mainPanel);
-		mainPanel.setLayout(new GridLayout(3,3));
+	public ImageIcon gameSetup() {
+
+		Stapel stapel = new Stapel();
+
+		return stapel.getObersteKarte();
+	}
+
+	public ImageIcon getBackside() {
+
+		Stapel stapel = new Stapel();
+
+		return stapel.getBackside();
 	}
 }
