@@ -47,6 +47,7 @@ public class GameGUI extends JDialog {
 		init();
 		gameSetup();
 		pack();
+		setResizable(false);
 		setVisible(true);
 	}
 
@@ -54,17 +55,20 @@ public class GameGUI extends JDialog {
 
 		getContentPane().add(mainPanel);
 		mainPanel.setLayout(new GridLayout(3,3));
-
 		kartenPanel.setLayout(new GridLayout(1,2));
+
 		kartenPanel.add(ablagestapelPanel);
-		kartenPanel.add(spielstapelPanel);
-
-		ablagestapelPanel.add(obersteKarte);
-
+		ablagestapelPanel.setBackground(Color.RED);
+		ablagestapelPanel.setLayout(new BorderLayout());
+		ablagestapelPanel.setBorder(BorderFactory.createEmptyBorder(0,40,0,0));
+		ablagestapelPanel.add(obersteKarte, BorderLayout.CENTER);
 		obersteKarte.setIcon(gameSetup());
 
-		spielstapelPanel.add(backside);
-
+		kartenPanel.add(spielstapelPanel);
+		spielstapelPanel.setBackground(Color.BLACK);
+		spielstapelPanel.setLayout(new BorderLayout());
+		spielstapelPanel.setBorder(BorderFactory.createEmptyBorder(0,40,0,0));
+		spielstapelPanel.add(backside, BorderLayout.CENTER);
 		backside.setIcon(getBackside());
 	}
 
