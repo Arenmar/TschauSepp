@@ -84,7 +84,7 @@ public class GameGUI extends JDialog {
 				break;
 		}
 
-		setSize(500,500);
+		pack();
 		setVisible(true);
 	}
 

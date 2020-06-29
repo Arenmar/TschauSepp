@@ -51,9 +51,14 @@ public class PlayerGUI extends JPanel {
 		karte = new JLabel();
 
 		scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(370,250));
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		defaultListModel = new DefaultListModel();
 		kartenListe = new JList(defaultListModel);
+		kartenListe.setVisibleRowCount(1);
+		kartenListe.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
 		for (Karte karte : spielerVector.get(index).getKarten()) {
 			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
