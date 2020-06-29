@@ -31,7 +31,7 @@ public class Spieler {
 	}
 
 	public void fuegeKarteZuHandHinzu(Karte karte) {
-
+		hand.add(karte);
 	}
 
 	public void entferneKarteAusHand(Spieler spieler, Vector<Karte> hand) {

@@ -18,6 +18,7 @@ public class Karte {
 
 	public Karte(String bezeichnung, String zahl, int wert, URL pfad) {
 		this.bezeichnung = bezeichnung;
+		this.zahl = zahl;
 		this.wert = wert;
 		this.pfad = pfad;
 	}
@@ -44,5 +45,9 @@ public class Karte {
 
 	public void setPfad(URL pfad) {
 		this.pfad = pfad;
+	}
+
+	public String getZahl() {
+		return zahl;
 	}
 }

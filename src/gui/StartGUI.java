@@ -42,6 +42,8 @@ public class StartGUI extends JFrame {
 		super("Tschau Sepp");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+		spielstapel = new Spielstapel();
+
 		cntr = 0;
 
 		mainPanel = new JPanel();
@@ -90,13 +92,6 @@ public class StartGUI extends JFrame {
 		if (name.getText().equals("")) {
 			errorGUI = new ErrorGUI(this);
 		} else {
-			/*
-			spielerVector.add(new Spieler(name.getText()));
-			alleSpielerPanel.add(new JLabel(name.getText()));
-			name.setText(null);
-			alleSpielerPanel.revalidate();
-			*/
-
 			Spieler spieler = new Spieler(name.getText());
 			spielerVector.add(spieler);
 			alleSpielerPanel.add(new JLabel(name.getText()));

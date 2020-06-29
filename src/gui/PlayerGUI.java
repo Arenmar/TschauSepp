@@ -6,6 +6,7 @@ import model.Spieler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.Vector;
 
 /**
@@ -57,13 +58,13 @@ public class PlayerGUI extends JPanel {
 		kartenListe = new JList(defaultListModel);
 
 		for (Karte karte : spielerVector.get(index).getKarten()) {
-
 			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
 			Image image = imageIcon.getImage();
 			Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
 			imageIcon = new ImageIcon(newimg);
 			defaultListModel.addElement(imageIcon);
 		}
+
 		init();
 	}
 

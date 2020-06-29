@@ -91,6 +91,5 @@ public class GameGUI extends JDialog {
 	public void init() {
 		getContentPane().add(mainPanel);
 		mainPanel.setLayout(new GridLayout(3,3));
-
 	}
 }
