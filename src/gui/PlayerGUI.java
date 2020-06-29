@@ -50,15 +50,15 @@ public class PlayerGUI extends JPanel {
 		name = new JLabel(spielerVector.get(index).getName());
 		karte = new JLabel();
 
-		scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(370,250));
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
 		defaultListModel = new DefaultListModel();
 		kartenListe = new JList(defaultListModel);
 		kartenListe.setVisibleRowCount(1);
 		kartenListe.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+
+		scrollPane = new JScrollPane(kartenListe);
+		scrollPane.setPreferredSize(new Dimension(370,250));
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		for (Karte karte : spielerVector.get(index).getKarten()) {
 			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
@@ -81,7 +81,6 @@ public class PlayerGUI extends JPanel {
 		mainPanel.add(punkte, BorderLayout.SOUTH);
 
 		kartenPanel.add(scrollPane);
-		scrollPane.add(kartenListe);
 
 		buttonPanel.add(legen);
 		buttonPanel.add(ziehen);
