@@ -100,6 +100,7 @@ public class StartGUI extends JFrame {
 
 			for (int i = 0; i < 7; i++) {
 				spieler.fuegeKarteZuHandHinzu(spielstapel.zufaelligeKarte());
+				System.out.println(spielstapel.zufaelligeKarte().getPfad());
 			}
 		}
 	}

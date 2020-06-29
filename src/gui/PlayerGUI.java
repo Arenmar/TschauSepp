@@ -31,8 +31,6 @@ public class PlayerGUI extends JPanel {
 
 	private JList kartenListe;
 
-	private Vector<Karte> karten;
-
 	private DefaultListModel defaultListModel;
 
 	public PlayerGUI(int index, Vector<Spieler> spielerVector) {
@@ -78,6 +76,7 @@ public class PlayerGUI extends JPanel {
 		mainPanel.add(punkte, BorderLayout.SOUTH);
 
 		kartenPanel.add(scrollPane);
+		scrollPane.add(kartenListe);
 
 		buttonPanel.add(legen);
 		buttonPanel.add(ziehen);
