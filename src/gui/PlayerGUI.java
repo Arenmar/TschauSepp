@@ -2,14 +2,12 @@ package gui;
 
 import model.Karte;
 import model.Spiel;
-import model.Spieler;
 import model.Stapel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 /**
  * gui.PlayerGUI
@@ -35,7 +33,7 @@ public class PlayerGUI extends JPanel {
 
 	private DefaultListModel defaultListModel;
 
-	public PlayerGUI(int index, Vector<Spieler> spielerVector, Stapel spielstapel, Stapel ablagestapel, Spiel spiel, int spielerCntr) {
+	public PlayerGUI(int index, Stapel spielstapel, Stapel ablagestapel, Spiel spiel, int spielerCntr) {
 
 		this.index = index;
 
@@ -48,15 +46,15 @@ public class PlayerGUI extends JPanel {
 		ziehen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.spieleKarte(spielerVector.get())
+				spiel.spieleKarte(spiel.getSpieler().get(spielerCntr), kartenListe.getSelectedIndex());
 			}
 		});
 
 		rufeTschau = new JButton("Tschau");
 		rufeSepp = new JButton("Sepp");
 
-		punkte = new JLabel(String.valueOf(spielerVector.get(index).getPunkte()));
-		name = new JLabel(spielerVector.get(index).getName());
+		punkte = new JLabel(String.valueOf(spiel.getSpieler().get(index).getPunkte()));
+		name = new JLabel(spiel.getSpieler().get(index).getName());
 
 		defaultListModel = new DefaultListModel();
 		kartenListe = new JList(defaultListModel);
@@ -68,7 +66,7 @@ public class PlayerGUI extends JPanel {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-		for (Karte karte : spielerVector.get(index).getKarten()) {
+		for (Karte karte : spiel.getSpieler().get(index).getKarten()) {
 			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
 			Image image = imageIcon.getImage();
 			Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);

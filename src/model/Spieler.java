@@ -34,28 +34,6 @@ public class Spieler {
 		hand.add(karte);
 	}
 
-	public void karteLegen(Spieler spieler, Vector<Karte> hand) {
-
-		if (karte.getType().equals(game.getObersteKarte().getType()) || card.getCardValue() == game.getObersteKarte().getCardValue()){
-			if (card.getEventNr() != -1){
-				card.specialEvent(game);
-			}
-			this.card.remove(card);
-			game.getAblagestapel().add(card);
-			if (card.getCardValue() != 20){
-				game.setObersteKarte(card);
-			}
-
-			setChanged();
-			notifyObservers(this.card);
-			game.nextPlayer();
-		}
-
-		if (this.card.size() == 0){
-			game.endRound(this);
-		}
-	}
-
 	public void entferneAlleKarten() {
 
 	}

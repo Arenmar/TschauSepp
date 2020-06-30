@@ -15,8 +15,8 @@ public class TSApp {
 
 	public static void main(String[] args) {
 
-		Spiel game = new Spiel();
+		Spiel spiel = new Spiel();
 
-		StartGUI sg = new StartGUI(game);
+		StartGUI sg = new StartGUI(spiel);
 	}
 }

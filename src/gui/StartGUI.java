@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 /**
  * gui.StartGUI
@@ -22,8 +21,7 @@ public class StartGUI extends JFrame {
 
 	private Spiel spiel;
 	private Spieler spieler;
-	private Stapel austeilstapel, spielstapel;
-	private Vector<Spieler> spielerVector = new Vector<Spieler>();
+	private Stapel spielstapel, ablagestapel;
 	private GameGUI gameGUI;
 	private ErrorGUI errorGUI;
 
@@ -42,8 +40,10 @@ public class StartGUI extends JFrame {
 		super("Tschau Sepp");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		austeilstapel = new Stapel();
+		this.spiel = spiel;
+
 		spielstapel = new Stapel();
+		ablagestapel = new Stapel();
 
 		cntr = 0;
 
@@ -96,19 +96,19 @@ public class StartGUI extends JFrame {
 			errorGUI = new ErrorGUI(this);
 		} else {
 			Spieler spieler = new Spieler(name.getText());
-			spielerVector.add(spieler);
+			spiel.setSpieler(spieler);
 			alleSpielerPanel.add(new JLabel(name.getText()));
 			name.setText(null);
 			alleSpielerPanel.revalidate();
 
 			for (int i = 0; i < 7; i++) {
-				spieler.fuegeKarteZuHandHinzu(austeilstapel.zufaelligeKarte());
+				spieler.fuegeKarteZuHandHinzu(spielstapel.zufaelligeKarte());
 				//System.out.println(austeilstapel.zufaelligeKarte().getPfad()); <-- Zum debuggen, gibt Pfad der Karten aus welche zu Spielerhand hinzugefügt werden
 			}
 		}
 	}
 
 	public void onSpielStarten(ActionEvent e) {
-		gameGUI = new GameGUI(this, spiel, spielerVector, spielstapel, spielstapel);
+		gameGUI = new GameGUI(this, spiel, spielstapel, ablagestapel);
 	}
 }

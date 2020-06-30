@@ -54,8 +54,8 @@ public class Spiel {
 
 	}
 
-	public boolean spieleKarte(Spieler spieler, String symbol) {
-		return true;
+	public void spieleKarte(Spieler spieler, int index) {
+
 	}
 
 	public void rufeTschau(Spieler spieler) {
@@ -84,5 +84,9 @@ public class Spiel {
 
 	public Karte getLetzteKarte() {
 		return letzteKarte;
+	}
+
+	public void setSpieler(Spieler spieler) {
+		spielerListe.add(spieler);
 	}
 }
