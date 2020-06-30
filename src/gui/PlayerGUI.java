@@ -2,6 +2,7 @@ package gui;
 
 import model.Karte;
 import model.Spiel;
+import model.Spieler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +22,8 @@ import java.util.Observer;
 public class PlayerGUI extends JPanel implements Observer {
 
 	private Spiel spiel;
-	private int index;
 
-	private boolean istAktuellerSpieler;
+	private int index;
 
 	private JPanel mainPanel, kartenPanel, buttonPanel;
 
@@ -53,9 +53,8 @@ public class PlayerGUI extends JPanel implements Observer {
 		legen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.ersterSpieler(0);
-				spiel.spieleKarte(spiel.getAktuellerSpieler(), kartenListe.getSelectedIndex());
-				spiel.setNextPlayer(spiel.getAktuellerSpieler());
+				spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+ 				spiel.setNextPlayer();
 			}
 		});
 
@@ -131,5 +130,23 @@ public class PlayerGUI extends JPanel implements Observer {
 			defaultListModel.addElement(imageIcon);
 		}
 		kartenListe.updateUI();
+	}
+
+	public void renderPlayerGUI() {
+		mainPanel.setBackground(Color.RED);
+		legen.setEnabled(true);
+		ziehen.setEnabled(true);
+		rufeTschau.setEnabled(true);
+		rufeSepp.setEnabled(true);
+		repaint();
+	}
+
+	public void unrenderPlayerGUI() {
+		mainPanel.setBackground(null);
+		legen.setEnabled(false);
+		ziehen.setEnabled(false);
+		rufeTschau.setEnabled(false);
+		rufeSepp.setEnabled(false);
+		repaint();
 	}
 }

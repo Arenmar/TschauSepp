@@ -118,5 +118,6 @@ public class StartGUI extends JFrame {
 
 		gameGUI = new GameGUI(this, spiel);
 		spiel.setGameGUI(gameGUI);
+		spiel.activatePlayerGUI();
 	}
 }

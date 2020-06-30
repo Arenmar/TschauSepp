@@ -16,31 +16,23 @@ import java.util.Vector;
 
 public class Spiel extends Observable {
 
-	private int anzSpieler, anzKartenZuZiehen;
-	private Spieler aktuellerSpieler;
+	private int anzSpieler, anzKartenZuZiehen, spielerCntr;
 	private Stapel spielstapel, ablagestapel;
 	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
+	private Vector<PlayerGUI> allePlayerGUIs;
 	private GameGUI gameGUI;
 	private PlayerGUI playerGUI;
 
 	public Spiel() {
 
 		spielerListe = new Vector<>();
+		allePlayerGUIs = new Vector<>();
+
 		spielstapel = new Stapel();
 		ablagestapel = new Stapel();
-	}
 
-	public void ladeSpiel() {
-
-	}
-
-	public void ladeRunde() {
-
-	}
-
-	public void fuelleKartenstapel() {
-
+		spielerCntr = 0;
 	}
 
 	public void beendeSpiel() {
@@ -68,10 +60,13 @@ public class Spiel extends Observable {
 
 		Karte karte = spieler.getHand().get(selectedIndex);
 
+		/*
 		System.out.println(ablagestapel.getObersteKarte().getBezeichnung());
 		System.out.println(ablagestapel.getObersteKarte().getZahl());
 		System.out.println(karte.getBezeichnung());
 		System.out.println(karte.getZahl());
+		*/
+
 		if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(karte.getBezeichnung()) ||
 				ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(karte.getZahl())) {
 
@@ -81,7 +76,7 @@ public class Spiel extends Observable {
 		}
 
 		setChanged();
-		notifyObservers();
+ 		notifyObservers();
 	}
 
 	public void rufeTschau(Spieler spieler) {
@@ -104,6 +99,10 @@ public class Spiel extends Observable {
 		return spielerListe;
 	}
 
+	public Spieler getEinzelnerSpieler() {
+		return spielerListe.get(spielerCntr);
+	}
+
 	public Stapel getSpielstapel() {
 		return spielstapel;
 	}
@@ -124,28 +123,46 @@ public class Spiel extends Observable {
 		this.gameGUI = gameGUI;
 	}
 
-	public void setCurrentPlayer(Spieler aktuellerSpieler) {
-		this.aktuellerSpieler = aktuellerSpieler;
+	public void setPlayerGUI(Vector<PlayerGUI> allePlayerGUIs) {
+		this.allePlayerGUIs = allePlayerGUIs;
 	}
 
-	public Spieler getCurrentPlayer() {
+	public void addPlayerGUIs(PlayerGUI playerGUI) {
+		allePlayerGUIs.add(playerGUI);
+	}
+
+	public void setCurrentPlayer(Spieler aktuellerSpieler) {
+		aktuellerSpieler.setAktuellerSpieler(true);
+	}
+
+	public Spieler getCurrentPlayer(Spieler aktuellerSpieler) {
 		return aktuellerSpieler;
 	}
 
-	public void setNextPlayer(Spieler aktuellerSpieler) {
+	public void setNextPlayer() {
 
-		this.aktuellerSpieler = aktuellerSpieler;
+		if (spielerCntr == (spielerListe.size() - 1)) {
+			spielerCntr = 0;
+		} else {
+			spielerCntr++;
+		}
 
-		for (int i = 0; i < spielerListe.size(); i++) {
-			if (spielerListe.get(i).equals(aktuellerSpieler)) {
-				if (i == 3) {
-					setCurrentPlayer(spielerListe.get(0));
-				} else {
-					setCurrentPlayer(spielerListe.get(i + 1));
-				}
-				break;
+		activatePlayerGUI();
+	}
+
+	public void activatePlayerGUI() {
+
+		for (int i = 0; i < allePlayerGUIs.size(); i++) {
+			if (spielerCntr == i) {
+				allePlayerGUIs.get(i).renderPlayerGUI();
+			} else {
+				allePlayerGUIs.get(i).unrenderPlayerGUI();
 			}
 		}
+	}
+
+	public int getSpielerCntr() {
+		return spielerCntr;
 	}
 
 	public Spieler ersterSpieler(int index) {

@@ -56,7 +56,10 @@ public class Spieler {
 	}
 
 	public boolean isAktuellerSpieler() {
-		return aktuellerSpieler;
+		if (aktuellerSpieler) {
+			return true;
+		}
+		return false;
 	}
 
 	public void setAktuellerSpieler(boolean aktuellerSpieler) {
