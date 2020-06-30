@@ -55,12 +55,6 @@ public class Spieler {
 		return hand;
 	}
 
-	/*
-	public String toString() {
-		//TODO
-	}
-	 */
-
 	public boolean isAktuellerSpieler() {
 		return aktuellerSpieler;
 	}

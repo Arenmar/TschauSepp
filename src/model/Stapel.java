@@ -104,7 +104,12 @@ public class Stapel {
 	}
 
 	public void karteHinzufuegen(Karte karte) {
+
 		karten.add(karte);
+	}
+
+	public URL zuletztGelegteKarte() {
+		return karten.get(karten.size() - 1).getPfad();
 	}
 
 	/* Zum Debugen, gibt den Pfad aller Karten aus:

@@ -115,7 +115,8 @@ public class StartGUI extends JFrame {
 	}
 
 	public void onSpielStarten(ActionEvent e) {
-
+		spiel.ersterSpieler();
 		gameGUI = new GameGUI(this, spiel);
+		spiel.setGameGUI(gameGUI);
 	}
 }

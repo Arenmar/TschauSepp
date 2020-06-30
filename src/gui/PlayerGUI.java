@@ -46,15 +46,15 @@ public class PlayerGUI extends JPanel {
 		buttonPanel = new JPanel(new GridLayout(4,1));
 
 		legen = new JButton("Legen");
-
-		ziehen = new JButton("Ziehen");
-		ziehen.addActionListener(new ActionListener() {
+		legen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				spiel.spieleKarte(spiel.getSpieler().get(spielerCntr), kartenListe.getSelectedIndex());
-				nextPlayer(spiel.getSpieler(), spielerCntr);
+				spiel.nextPlayer();
 			}
 		});
+
+		ziehen = new JButton("Ziehen");
 
 		rufeTschau = new JButton("Tschau");
 		rufeSepp = new JButton("Sepp");
@@ -113,12 +113,6 @@ public class PlayerGUI extends JPanel {
 			name.setForeground(Color.GREEN);
 		} else {
 			name.setForeground(Color.BLACK);
-		}
-	}
-
-	private void nextPlayer(Vector<Spieler> spielerListe, int spielerCntr) {
-		if (!(spielerCntr == spielerListe.size() - 1)) {
-			spielerCntr++;
 		}
 	}
 }

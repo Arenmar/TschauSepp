@@ -30,6 +30,8 @@ public class GameGUI extends JDialog {
 
 		spielerCntr = 0;
 
+		this.spiel = spiel;
+
 		mainPanel = new JPanel();
 		kartenPanel = new JPanel();
 		spielstapelPanel = new JPanel();
@@ -133,9 +135,7 @@ public class GameGUI extends JDialog {
 
 	public void karteAnzeigen() {
 
-		URL url = getClass().getResource();
-
-		ImageIcon imageIcon = new ImageIcon(url);
+		ImageIcon imageIcon = new ImageIcon(spiel.getAblagestapel().zuletztGelegteKarte());
 		Image image = imageIcon.getImage();
 		Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
 		imageIcon = new ImageIcon(newimg);

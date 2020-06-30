@@ -1,6 +1,7 @@
 package model;
 
 import gui.GameGUI;
+import gui.PlayerGUI;
 
 import java.util.Vector;
 
@@ -14,11 +15,13 @@ import java.util.Vector;
 
 public class Spiel {
 
-	private int aktuellerSpieler, anzSpieler, anzKartenZuZiehen;
+	private int anzSpieler, anzKartenZuZiehen;
 	private Spieler spieler;
 	private Stapel spielstapel, ablagestapel;
 	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
+	private GameGUI gameGUI;
+	private PlayerGUI playerGUI;
 
 	public Spiel() {
 
@@ -57,8 +60,6 @@ public class Spiel {
 
 	public void spieleKarte(Spieler spieler, int index) {
 
-		Karte letzteKarte = ablagestapel.getObersteKarte();
-
 		if (spieler.isAktuellerSpieler()) {
 
 			Karte karte = spieler.getHand().get(index);
@@ -68,6 +69,7 @@ public class Spiel {
 
 				spieler.entferneKarte(karte);
 				ablagestapel.karteHinzufuegen(karte);
+				gameGUI.karteAnzeigen();
 			}
 		}
 	}
@@ -106,5 +108,27 @@ public class Spiel {
 
 	public void setSpieler(Spieler spieler) {
 		spielerListe.add(spieler);
+	}
+
+	public void setGameGUI(GameGUI gameGUI) {
+		this.gameGUI = gameGUI;
+	}
+
+	public void nextPlayer() {
+
+		for (int i = 0; i < spielerListe.size(); i++) {
+			if(spielerListe.get(i).equals(spielerListe.get(i).isAktuellerSpieler())){
+				if (spielerListe.size() == i+1){
+					spielerListe.get(0).setAktuellerSpieler(true);
+				}else{
+					spielerListe.get(i+1).setAktuellerSpieler(true);
+				}
+				break;
+			}
+		}
+	}
+
+	public void ersterSpieler() {
+		spielerListe.get(0).setAktuellerSpieler(true); //(int) Math.random() * (spielerListe.size() - 1) + 1
 	}
 }
