@@ -2,14 +2,13 @@ package gui;
 
 import model.Karte;
 import model.Spiel;
-import model.Spieler;
-import model.Stapel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * gui.PlayerGUI
@@ -19,8 +18,9 @@ import java.util.Vector;
  * @Date: 28-06-2020
  */
 
-public class PlayerGUI extends JPanel {
+public class PlayerGUI extends JPanel implements Observer {
 
+	private Spiel spiel;
 	private int index;
 
 	private boolean istAktuellerSpieler;
@@ -40,6 +40,10 @@ public class PlayerGUI extends JPanel {
 	public PlayerGUI(int index, Spiel spiel, int spielerCntr) {
 
 		this.index = index;
+
+		this.spiel = spiel;
+
+		spiel.addObserver(this);
 
 		mainPanel = new JPanel(new BorderLayout());
 		kartenPanel = new JPanel();
@@ -62,11 +66,7 @@ public class PlayerGUI extends JPanel {
 		punkte = new JLabel(String.valueOf(spiel.getSpieler().get(index).getPunkte()));
 
 		name = new JLabel(spiel.getSpieler().get(index).getName());
-		if (spiel.getSpieler().get(spielerCntr).isAktuellerSpieler()) {
-			name.setForeground(Color.GREEN);
-		} else {
-			name.setForeground(Color.BLACK);
-		}
+
 
 		defaultListModel = new DefaultListModel();
 		kartenListe = new JList(defaultListModel);
@@ -114,5 +114,19 @@ public class PlayerGUI extends JPanel {
 		} else {
 			name.setForeground(Color.BLACK);
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+
+		defaultListModel.removeAllElements();
+		for (Karte karte : spiel.getSpieler().get(index).getHand()) {
+			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
+			Image image = imageIcon.getImage();
+			Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			defaultListModel.addElement(imageIcon);
+		}
+		kartenListe.updateUI();
 	}
 }

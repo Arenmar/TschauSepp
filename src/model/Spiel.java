@@ -3,6 +3,7 @@ package model;
 import gui.GameGUI;
 import gui.PlayerGUI;
 
+import java.util.Observable;
 import java.util.Vector;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Vector;
  * @Date: 27-06-2020
  */
 
-public class Spiel {
+public class Spiel extends Observable {
 
 	private int anzSpieler, anzKartenZuZiehen;
 	private Spieler spieler;
@@ -72,6 +73,9 @@ public class Spiel {
 				gameGUI.karteAnzeigen();
 			}
 		}
+
+		setChanged();
+		notifyObservers(this.spieler.getHand());
 	}
 
 	public void rufeTschau(Spieler spieler) {
