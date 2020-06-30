@@ -2,16 +2,9 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
-/**
- * gui.ErrorGUI
- *
- * @Author: Martin Arendar
- * @Version: 1.0
- * @Date: 28-06-2020
- */
-
-public class ErrorGUI extends JDialog {
+public class LegenerrorGUI extends JDialog {
 
 	private JPanel mainPanel;
 
@@ -19,7 +12,7 @@ public class ErrorGUI extends JDialog {
 
 	private GridBagConstraints gbc;
 
-	public ErrorGUI(JFrame parent) {
+	public LegenerrorGUI(ActionListener parent) {
 
 		init();
 		pack();
@@ -31,13 +24,12 @@ public class ErrorGUI extends JDialog {
 
 		mainPanel = new JPanel();
 
-		message = new JLabel("Bitte einen Namen eingeben");
+		message = new JLabel("Die ausgewählte Karte kann nicht gelegt werden");
 
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(1,1,1,1);
 
 		getContentPane().add(mainPanel);
-
 		mainPanel.setLayout(new GridBagLayout());
 
 		gbc.gridx = 0;
@@ -56,4 +48,3 @@ public class ErrorGUI extends JDialog {
 		setLocation(dx, dy);
 	}
 }
-

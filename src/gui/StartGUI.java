@@ -21,19 +21,15 @@ import java.awt.event.ActionListener;
 public class StartGUI extends JFrame {
 
 	private Spiel spiel;
-	private Spieler spieler;
 	private GameGUI gameGUI;
 	private ErrorGUI errorGUI;
-
-	private JLabel alleSpieler;
+	private ZuWenigSpielerError zuWenigSpielerError;
 
 	private JTextField name;
 
 	private JButton spielerHinzufuegen, spielStarten;
 
 	private JPanel mainPanel, spielerHinzufuegenPanel, alleSpielerPanel;
-
-	private static int cntr;
 
 	public StartGUI(Spiel spiel) {
 
@@ -42,13 +38,17 @@ public class StartGUI extends JFrame {
 
 		this.spiel = spiel;
 
-		cntr = 0;
+		init();
+		setSize(500,500);
+		centerFrame();
+		setVisible(true);
+	}
+
+	public void init() {
 
 		mainPanel = new JPanel();
 		spielerHinzufuegenPanel = new JPanel();
 		alleSpielerPanel = new JPanel();
-
-		alleSpieler = new JLabel();
 
 		name = new JTextField();
 
@@ -67,14 +67,6 @@ public class StartGUI extends JFrame {
 				onSpielStarten(e);
 			}
 		});
-
-		init();
-		pack();
-		setSize(500,500);
-		setVisible(true);
-	}
-
-	public void init() {
 
 		getContentPane().add(mainPanel);
 		mainPanel.setLayout(new BorderLayout());
@@ -100,7 +92,7 @@ public class StartGUI extends JFrame {
 			name.setText(null);
 			alleSpielerPanel.revalidate();
 
-			for (int i = 0; i < 7; i++) {
+			for (int i = 0; i < 1; i++) {
 				spieler.fuegeKarteZuHandHinzu(spiel.getSpielstapel().getDeck().get(0));
 				spiel.getSpielstapel().getDeck().remove(0);
 				//System.out.println(austeilstapel.zufaelligeKarte().getPfad()); <-- Zum debuggen, gibt Pfad der Karten aus welche zu Spielerhand hinzugefügt werden
@@ -116,8 +108,24 @@ public class StartGUI extends JFrame {
 
 	public void onSpielStarten(ActionEvent e) {
 
-		gameGUI = new GameGUI(this, spiel);
-		spiel.setGameGUI(gameGUI);
-		spiel.activatePlayerGUI();
+		if (spiel.getAlleSpieler().size() > 0) {
+			gameGUI = new GameGUI(spiel);
+			spiel.setGameGUI(gameGUI);
+			spiel.activatePlayerGUI();
+			setVisible(false);
+		} else {
+			zuWenigSpielerError = new ZuWenigSpielerError(this);
+		}
+	}
+
+	public void centerFrame() {
+
+		Dimension windowSize = getSize();
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		Point centerPoint = ge.getCenterPoint();
+
+		int dx = centerPoint.x - windowSize.width / 2;
+		int dy = centerPoint.y - windowSize.height / 2;
+		setLocation(dx, dy);
 	}
 }

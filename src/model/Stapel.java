@@ -108,7 +108,7 @@ public class Stapel {
 		karten.add(karte);
 	}
 
-	public URL zuletztGelegteKarte() {
+	public URL zuletztGelegteKarteURL() {
 		return karten.get(karten.size() - 1).getPfad();
 	}
 

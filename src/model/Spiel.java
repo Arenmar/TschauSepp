@@ -16,7 +16,7 @@ import java.util.Vector;
 
 public class Spiel extends Observable {
 
-	private int anzSpieler, anzKartenZuZiehen, spielerCntr;
+	private int anzKartenZuZiehen, spielerCntr;
 	private Stapel spielstapel, ablagestapel;
 	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
@@ -35,48 +35,78 @@ public class Spiel extends Observable {
 		spielerCntr = 0;
 	}
 
-	public void beendeSpiel() {
-
-	}
-
-	public Spieler getAktuellerSpieler() {
+	public Boolean beendeSpiel() {
 
 		for (int i = 0; i < spielerListe.size(); i++) {
-			if (spielerListe.get(i).isAktuellerSpieler()) {
-				System.out.println("Aktueller Spieler:" + spielerListe.get(i).getName());
-				return spielerListe.get(i);
+			if (spielerListe.get(i).getHand().size() == 0) {
+				gameGUI.spielende(getEinzelnerSpieler());
+				return true;
+			} else {
+				return false;
 			}
 		}
 		return null;
 	}
 
+	public Karte zieheKarten(Spieler spieler) {
 
-	public void zieheKarten(Spieler spieler) {
+		Karte zugKarte = spielstapel.getObersteKarte();
+		spieler.fuegeKarteZuHandHinzu(zugKarte);
+		spielstapel.getDeck().remove(zugKarte);
 
+		//System.out.println(spieler.getHand()); <-- Zum Debuggen, zeigt dass ein neues Objekt in der Hand des Spielers ist
 
+		return zugKarte;
 	}
 
 	public void spieleKarte(Spieler spieler, int selectedIndex) {
 
 		Karte karte = spieler.getHand().get(selectedIndex);
 
-		/*
-		System.out.println(ablagestapel.getObersteKarte().getBezeichnung());
-		System.out.println(ablagestapel.getObersteKarte().getZahl());
-		System.out.println(karte.getBezeichnung());
-		System.out.println(karte.getZahl());
+		/* Zum Debuggen, zeigt in Konsole Karte auf Stapel & in Hand
+		System.out.println("Karte auf Stapel: " +
+							ablagestapel.getObersteKarte().getBezeichnung() +
+							ablagestapel.getObersteKarte().getZahl());
+
+		System.out.println("Abgelegte Karte: " + karte.getBezeichnung() + karte.getZahl());
 		*/
 
 		if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(karte.getBezeichnung()) ||
-				ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(karte.getZahl())) {
+			ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(karte.getZahl())) {
 
 			spieler.entferneKarte(karte);
 			ablagestapel.karteHinzufuegen(karte);
 			gameGUI.karteAnzeigen();
 		}
-
 		setChanged();
- 		notifyObservers();
+		notifyObservers();
+	}
+
+	public Boolean checkMove(Spieler spieler, int selectedIndex) {
+
+		Karte karte = spieler.getHand().get(selectedIndex);
+
+		if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(karte.getBezeichnung()) ||
+			ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(karte.getZahl())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean checkPlayable(Spieler spieler) {
+
+		for (int i = 0; i < spieler.getHand().size(); i++) {
+			if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(spieler.getHand().get(i).getBezeichnung()) ||
+				ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(spieler.getHand().get(i).getZahl())) {
+
+				return false;
+			} else {
+
+				return true;
+			}
+		}
+		return null;
 	}
 
 	public void rufeTschau(Spieler spieler) {
@@ -87,15 +117,7 @@ public class Spiel extends Observable {
 
 	}
 
-	public int getAnzSpieler() {
-		return anzSpieler;
-	}
-
-	public int getAnzKartenZuZiehen() {
-		return anzKartenZuZiehen;
-	}
-
-	public Vector<Spieler> getSpieler() {
+	public Vector<Spieler> getAlleSpieler() {
 		return spielerListe;
 	}
 
@@ -111,10 +133,6 @@ public class Spiel extends Observable {
 		return ablagestapel;
 	}
 
-	public Karte getLetzteKarte() {
-		return letzteKarte;
-	}
-
 	public void setSpieler(Spieler spieler) {
 		spielerListe.add(spieler);
 	}
@@ -123,20 +141,8 @@ public class Spiel extends Observable {
 		this.gameGUI = gameGUI;
 	}
 
-	public void setPlayerGUI(Vector<PlayerGUI> allePlayerGUIs) {
-		this.allePlayerGUIs = allePlayerGUIs;
-	}
-
 	public void addPlayerGUIs(PlayerGUI playerGUI) {
 		allePlayerGUIs.add(playerGUI);
-	}
-
-	public void setCurrentPlayer(Spieler aktuellerSpieler) {
-		aktuellerSpieler.setAktuellerSpieler(true);
-	}
-
-	public Spieler getCurrentPlayer(Spieler aktuellerSpieler) {
-		return aktuellerSpieler;
 	}
 
 	public void setNextPlayer() {
@@ -161,12 +167,10 @@ public class Spiel extends Observable {
 		}
 	}
 
-	public int getSpielerCntr() {
-		return spielerCntr;
-	}
+	public void neuesDeck() {
 
-	public Spieler ersterSpieler(int index) {
-		spielerListe.get(index).setAktuellerSpieler(true); //(int) Math.random() * (spielerListe.size() - 1) + 1
-		return spielerListe.get(0);
+		if (spielstapel.getDeck().size() == 0) {
+			spielstapel.neuerStapel();
+		}
 	}
 }

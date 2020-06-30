@@ -6,8 +6,6 @@ import model.Stapel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
-import java.util.Vector;
 
 /**
  * gui.GameGUI
@@ -17,17 +15,18 @@ import java.util.Vector;
  * @Date: 27-06-2020
  */
 
-public class GameGUI extends JDialog {
+public class GameGUI extends JFrame {
 
 	private Spiel spiel;
-	private int spielerCntr;
+	private WinnerGUI winnerGUI;
 
 	private JPanel mainPanel, kartenPanel, spielstapelPanel, ablagestapelPanel;
 
 	private JLabel obersteKarte, backside;
 
-	public GameGUI(JFrame parent, Spiel spiel) {
+	public GameGUI(Spiel spiel) {
 
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		this.spiel = spiel;
 
@@ -42,11 +41,14 @@ public class GameGUI extends JDialog {
 		playerSetup(spiel);
 		init();
 		pack();
+		centerFrame();
 		setResizable(false);
 		setVisible(true);
 	}
 
 	public void init() {
+
+
 
 		getContentPane().add(mainPanel);
 		mainPanel.setLayout(new GridLayout(3, 3));
@@ -69,7 +71,7 @@ public class GameGUI extends JDialog {
 
 	public void playerSetup(Spiel spiel) {
 
-		switch (spiel.getSpieler().size()) {
+		switch (spiel.getAlleSpieler().size()) {
 			case 1:
 				mainPanel.add(new JPanel());
 				PlayerGUI gui1 = new PlayerGUI(0, spiel);
@@ -137,13 +139,6 @@ public class GameGUI extends JDialog {
 		}
 	}
 
-	public ImageIcon gameSetup() {
-
-		Stapel stapel = new Stapel();
-
-		return stapel.getObersteKarteIcon();
-	}
-
 	public ImageIcon getBackside() {
 
 		Stapel stapel = new Stapel();
@@ -153,11 +148,33 @@ public class GameGUI extends JDialog {
 
 	public void karteAnzeigen() {
 
-		ImageIcon imageIcon = new ImageIcon(spiel.getAblagestapel().zuletztGelegteKarte());
+		ImageIcon imageIcon = new ImageIcon(spiel.getAblagestapel().zuletztGelegteKarteURL());
 		Image image = imageIcon.getImage();
 		Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
 		imageIcon = new ImageIcon(newimg);
 
 		obersteKarte.setIcon(imageIcon);
+	}
+
+	public void spielende(Spieler spieler) {
+
+		winnerGUI = new WinnerGUI(spieler, getSize());
+		setVisible(false);
+	}
+
+	public void centerFrame() {
+
+		Dimension windowSize = getSize();
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		Point centerPoint = ge.getCenterPoint();
+
+		int dx = centerPoint.x - windowSize.width / 2;
+		int dy = centerPoint.y - windowSize.height / 2;
+		setLocation(dx, dy);
+	}
+
+	public Dimension getSize() {
+
+		return getContentPane().getSize();
 	}
 }

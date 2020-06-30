@@ -22,6 +22,7 @@ import java.util.Observer;
 public class PlayerGUI extends JPanel implements Observer {
 
 	private Spiel spiel;
+	private LegenerrorGUI legenerrorGUI;
 
 	private int index;
 
@@ -47,29 +48,40 @@ public class PlayerGUI extends JPanel implements Observer {
 
 		mainPanel = new JPanel(new BorderLayout());
 		kartenPanel = new JPanel();
-		buttonPanel = new JPanel(new GridLayout(4,1));
+		buttonPanel = new JPanel(new GridLayout(4, 1));
 
 		legen = new JButton("Legen");
 		legen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
- 				spiel.setNextPlayer();
+				if (spiel.checkMove(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex())) {
+					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+					spiel.beendeSpiel();
+					spiel.setNextPlayer();
+				} else {
+					legenerrorGUI = new LegenerrorGUI(this);
+				}
 			}
+
 		});
 
 		ziehen = new JButton("Ziehen");
 		ziehen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.zieheKarten(spiel.getAktuellerSpieler());
+				spiel.beendeSpiel();
+				spiel.neuesDeck();
+				spiel.zieheKarten(spiel.getEinzelnerSpieler());
+				onZiehen();
+				spiel.beendeSpiel();
+				spiel.setNextPlayer();
 			}
 		});
 
 		rufeTschau = new JButton("Tschau");
 		rufeSepp = new JButton("Sepp");
 
-		name = new JLabel(spiel.getSpieler().get(index).getName());
+		name = new JLabel(spiel.getAlleSpieler().get(index).getName());
 
 		defaultListModel = new DefaultListModel();
 		kartenListe = new JList(defaultListModel);
@@ -77,11 +89,11 @@ public class PlayerGUI extends JPanel implements Observer {
 		kartenListe.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
 		scrollPane = new JScrollPane(kartenListe);
-		scrollPane.setPreferredSize(new Dimension(370,250));
+		scrollPane.setPreferredSize(new Dimension(370, 250));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-		for (Karte karte : spiel.getSpieler().get(index).getHand()) {
+		for (Karte karte : spiel.getAlleSpieler().get(index).getHand()) {
 			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
 			Image image = imageIcon.getImage();
 			Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
@@ -108,21 +120,11 @@ public class PlayerGUI extends JPanel implements Observer {
 		buttonPanel.add(rufeSepp);
 	}
 
-	public void setSpielerfarbe(Spiel spiel, int spielerCntr) {
-
-		spiel.getSpieler().get(0).setAktuellerSpieler(true);
-		if (spiel.getSpieler().get(0).isAktuellerSpieler()) {
-			name.setForeground(Color.GREEN);
-		} else {
-			name.setForeground(Color.BLACK);
-		}
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 
 		defaultListModel.removeAllElements();
-		for (Karte karte : spiel.getSpieler().get(index).getHand()) {
+		for (Karte karte : spiel.getAlleSpieler().get(index).getHand()) {
 			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
 			Image image = imageIcon.getImage();
 			Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
@@ -135,18 +137,30 @@ public class PlayerGUI extends JPanel implements Observer {
 	public void renderPlayerGUI() {
 		mainPanel.setBackground(Color.RED);
 		legen.setEnabled(true);
-		ziehen.setEnabled(true);
 		rufeTschau.setEnabled(true);
 		rufeSepp.setEnabled(true);
+		ziehen.setEnabled(true);
 		repaint();
 	}
 
 	public void unrenderPlayerGUI() {
 		mainPanel.setBackground(null);
 		legen.setEnabled(false);
-		ziehen.setEnabled(false);
 		rufeTschau.setEnabled(false);
 		rufeSepp.setEnabled(false);
+		ziehen.setEnabled(false);
 		repaint();
+	}
+
+	public void onZiehen() {
+
+		defaultListModel.removeAllElements();
+		for (Karte karte : spiel.getAlleSpieler().get(index).getHand()) {
+			ImageIcon imageIcon = new ImageIcon(karte.getPfad());
+			Image image = imageIcon.getImage();
+			Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			defaultListModel.addElement(imageIcon);
+		}
 	}
 }

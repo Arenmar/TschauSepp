@@ -4,22 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * gui.ErrorGUI
+ * gui.ZuWenigSpielerError
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 28-06-2020
+ * @Date: 01-07-2020
  */
 
-public class ErrorGUI extends JDialog {
-
-	private JPanel mainPanel;
+public class ZuWenigSpielerError extends JDialog {
 
 	private JLabel message;
 
 	private GridBagConstraints gbc;
 
-	public ErrorGUI(JFrame parent) {
+	private JPanel mainPanel;
+
+	public ZuWenigSpielerError(JFrame parent) {
 
 		init();
 		pack();
@@ -31,13 +31,12 @@ public class ErrorGUI extends JDialog {
 
 		mainPanel = new JPanel();
 
-		message = new JLabel("Bitte einen Namen eingeben");
+		message = new JLabel("Bitte mindestens 1 Spieler hinzufügen");
 
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(1,1,1,1);
 
 		getContentPane().add(mainPanel);
-
 		mainPanel.setLayout(new GridBagLayout());
 
 		gbc.gridx = 0;
@@ -56,4 +55,3 @@ public class ErrorGUI extends JDialog {
 		setLocation(dx, dy);
 	}
 }
-

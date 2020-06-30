@@ -1,48 +1,52 @@
 package gui;
 
+import model.Spieler;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * gui.ErrorGUI
+ * gui.WinnerGUI
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 28-06-2020
+ * @Date: 30-06-2020
  */
 
-public class ErrorGUI extends JDialog {
-
-	private JPanel mainPanel;
+public class WinnerGUI extends JFrame {
 
 	private JLabel message;
 
 	private GridBagConstraints gbc;
 
-	public ErrorGUI(JFrame parent) {
+	private JPanel mainPanel;
 
-		init();
-		pack();
+	public WinnerGUI(Spieler spieler, Dimension sizeGameWindow) {
+
+		super("Gewinner");
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+		init(spieler);
+		setSize(sizeGameWindow);
 		centerFrame();
 		setVisible(true);
 	}
 
-	public void init() {
+	public void init(Spieler spieler) {
 
-		mainPanel = new JPanel();
-
-		message = new JLabel("Bitte einen Namen eingeben");
+		message = new JLabel("Der Gewinner ist: " + spieler.getName());
 
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(1,1,1,1);
 
-		getContentPane().add(mainPanel);
+		mainPanel = new JPanel();
 
+		getContentPane().add(mainPanel);
 		mainPanel.setLayout(new GridBagLayout());
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		mainPanel.add(message);
+		mainPanel.add(message, gbc);
 	}
 
 	public void centerFrame() {
@@ -56,4 +60,3 @@ public class ErrorGUI extends JDialog {
 		setLocation(dx, dy);
 	}
 }
-
