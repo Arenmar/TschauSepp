@@ -29,7 +29,7 @@ public class PlayerGUI extends JPanel implements Observer {
 
 	private JButton legen, ziehen, rufeTschau, rufeSepp;
 
-	private JLabel punkte, name;
+	private JLabel name;
 
 	private JScrollPane scrollPane;
 
@@ -37,7 +37,7 @@ public class PlayerGUI extends JPanel implements Observer {
 
 	private DefaultListModel defaultListModel;
 
-	public PlayerGUI(int index, Spiel spiel, int spielerCntr) {
+	public PlayerGUI(int index, Spiel spiel) {
 
 		this.index = index;
 
@@ -53,20 +53,23 @@ public class PlayerGUI extends JPanel implements Observer {
 		legen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.spieleKarte(spiel.getSpieler().get(spielerCntr), kartenListe.getSelectedIndex());
+				spiel.spieleKarte(spiel.ersterSpieler(index), kartenListe.getSelectedIndex());
 				spiel.nextPlayer();
 			}
 		});
 
 		ziehen = new JButton("Ziehen");
+		ziehen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//spiel.zieheKarten();
+			}
+		});
 
 		rufeTschau = new JButton("Tschau");
 		rufeSepp = new JButton("Sepp");
 
-		punkte = new JLabel(String.valueOf(spiel.getSpieler().get(index).getPunkte()));
-
 		name = new JLabel(spiel.getSpieler().get(index).getName());
-
 
 		defaultListModel = new DefaultListModel();
 		kartenListe = new JList(defaultListModel);
@@ -96,7 +99,6 @@ public class PlayerGUI extends JPanel implements Observer {
 		mainPanel.add(kartenPanel, BorderLayout.CENTER);
 		mainPanel.add(buttonPanel, BorderLayout.EAST);
 		mainPanel.add(name, BorderLayout.NORTH);
-		mainPanel.add(punkte, BorderLayout.SOUTH);
 
 		kartenPanel.add(scrollPane);
 

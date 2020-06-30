@@ -17,7 +17,6 @@ import java.util.Vector;
 public class Spiel extends Observable {
 
 	private int anzSpieler, anzKartenZuZiehen;
-	private Spieler spieler;
 	private Stapel spielstapel, ablagestapel;
 	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
@@ -47,24 +46,26 @@ public class Spiel extends Observable {
 
 	}
 
-	public void getAktuellerSpieler() {
+	public boolean getAktuellerSpieler() {
+		return spielerListe.get(0).isAktuellerSpieler();
+	}
+
+
+
+	public void zieheKarten(Spieler spieler) {
 
 	}
 
-	public void getGueltigeZüge() {
-
-	}
-
-	public void zieheKarten(Spieler spieler, int anzahlKarten) {
-
-	}
-
-	public void spieleKarte(Spieler spieler, int index) {
+	public void spieleKarte(Spieler spieler, int selectedIndex) {
 
 		if (spieler.isAktuellerSpieler()) {
 
-			Karte karte = spieler.getHand().get(index);
+			Karte karte = spieler.getHand().get(selectedIndex);
 
+			System.out.println(ablagestapel.getObersteKarte().getBezeichnung());
+			System.out.println(ablagestapel.getObersteKarte().getZahl());
+			System.out.println(karte.getBezeichnung());
+			System.out.println(karte.getZahl());
 			if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(karte.getBezeichnung()) ||
 				ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(karte.getZahl())) {
 
@@ -75,7 +76,7 @@ public class Spiel extends Observable {
 		}
 
 		setChanged();
-		notifyObservers(this.spieler.getHand());
+		notifyObservers();
 	}
 
 	public void rufeTschau(Spieler spieler) {
@@ -121,7 +122,7 @@ public class Spiel extends Observable {
 	public void nextPlayer() {
 
 		for (int i = 0; i < spielerListe.size(); i++) {
-			if(spielerListe.get(i).equals(spielerListe.get(i).isAktuellerSpieler())){
+			if(getAktuellerSpieler()) {
 				if (spielerListe.size() == i+1){
 					spielerListe.get(0).setAktuellerSpieler(true);
 				}else{
@@ -132,7 +133,8 @@ public class Spiel extends Observable {
 		}
 	}
 
-	public void ersterSpieler() {
-		spielerListe.get(0).setAktuellerSpieler(true); //(int) Math.random() * (spielerListe.size() - 1) + 1
+	public Spieler ersterSpieler(int index) {
+		spielerListe.get(index).setAktuellerSpieler(true); //(int) Math.random() * (spielerListe.size() - 1) + 1
+		return spielerListe.get(0);
 	}
 }
