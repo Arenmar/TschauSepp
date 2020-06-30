@@ -17,6 +17,7 @@ import java.util.Vector;
 public class Spiel extends Observable {
 
 	private int anzSpieler, anzKartenZuZiehen;
+	private Spieler aktuellerSpieler;
 	private Stapel spielstapel, ablagestapel;
 	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
@@ -47,7 +48,15 @@ public class Spiel extends Observable {
 	}
 
 	public boolean getAktuellerSpieler() {
-		return spielerListe.get(0).isAktuellerSpieler();
+
+		for (int i = 0; i < spielerListe.size(); i++) {
+			if (spielerListe.get(i).isAktuellerSpieler()) {
+				System.out.println("Aktueller Spieler:" + spielerListe.get(i).getName());
+				return spielerListe.get(i).isAktuellerSpieler();
+			} else {
+				return null;
+			}
+		}
 	}
 
 
@@ -74,7 +83,6 @@ public class Spiel extends Observable {
 				gameGUI.karteAnzeigen();
 			}
 		}
-
 		setChanged();
 		notifyObservers();
 	}
@@ -119,14 +127,22 @@ public class Spiel extends Observable {
 		this.gameGUI = gameGUI;
 	}
 
-	public void nextPlayer() {
+	public void setCurrentPlayer(Spieler aktuellerSpieler) {
+		this.aktuellerSpieler = aktuellerSpieler;
+	}
+
+	public Spieler getCurrentPlayer() {
+		return aktuellerSpieler;
+	}
+
+	public void setNextPlayer() {
 
 		for (int i = 0; i < spielerListe.size(); i++) {
-			if(getAktuellerSpieler()) {
-				if (spielerListe.size() == i+1){
-					spielerListe.get(0).setAktuellerSpieler(true);
-				}else{
-					spielerListe.get(i+1).setAktuellerSpieler(true);
+			if (spielerListe.get(i).equals(aktuellerSpieler)) {
+				if (i == 3) {
+					setCurrentPlayer(spielerListe.get(0));
+				} else {
+					setCurrentPlayer(spielerListe.get(i + 1));
 				}
 				break;
 			}
