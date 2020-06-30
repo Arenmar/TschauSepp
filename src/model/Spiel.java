@@ -1,5 +1,7 @@
 package model;
 
+import gui.GameGUI;
+
 import java.util.Vector;
 
 /**
@@ -14,16 +16,15 @@ public class Spiel {
 
 	private int aktuellerSpieler, anzSpieler, anzKartenZuZiehen;
 	private Spieler spieler;
-	private Stapel stapel;
+	private Stapel spielstapel, ablagestapel;
 	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
 
 	public Spiel() {
+
 		spielerListe = new Vector<>();
-	}
-
-	public void naechsterSpieler() {
-
+		spielstapel = new Stapel();
+		ablagestapel = new Stapel();
 	}
 
 	public void ladeSpiel() {
@@ -56,6 +57,19 @@ public class Spiel {
 
 	public void spieleKarte(Spieler spieler, int index) {
 
+		Karte letzteKarte = ablagestapel.getObersteKarte();
+
+		if (spieler.isAktuellerSpieler()) {
+
+			Karte karte = spieler.getHand().get(index);
+
+			if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(karte.getBezeichnung()) ||
+				ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(karte.getZahl())) {
+
+				spieler.entferneKarte(karte);
+				ablagestapel.karteHinzufuegen(karte);
+			}
+		}
 	}
 
 	public void rufeTschau(Spieler spieler) {
@@ -78,8 +92,12 @@ public class Spiel {
 		return spielerListe;
 	}
 
-	public Stapel getStapel() {
-		return stapel;
+	public Stapel getSpielstapel() {
+		return spielstapel;
+	}
+
+	public Stapel getAblagestapel() {
+		return ablagestapel;
 	}
 
 	public Karte getLetzteKarte() {

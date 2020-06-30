@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 /**
  * gui.StartGUI
@@ -23,7 +22,6 @@ public class StartGUI extends JFrame {
 
 	private Spiel spiel;
 	private Spieler spieler;
-	private Stapel spielstapel, ablagestapel;
 	private GameGUI gameGUI;
 	private ErrorGUI errorGUI;
 
@@ -43,9 +41,6 @@ public class StartGUI extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		this.spiel = spiel;
-
-		spielstapel = new Stapel();
-		ablagestapel = new Stapel();
 
 		cntr = 0;
 
@@ -106,15 +101,21 @@ public class StartGUI extends JFrame {
 			alleSpielerPanel.revalidate();
 
 			for (int i = 0; i < 7; i++) {
-				spieler.fuegeKarteZuHandHinzu(spielstapel.getKarten().get(0));
-				spielstapel.getKarten().remove(0);
+				spieler.fuegeKarteZuHandHinzu(spiel.getSpielstapel().getDeck().get(0));
+				spiel.getSpielstapel().getDeck().remove(0);
 				//System.out.println(austeilstapel.zufaelligeKarte().getPfad()); <-- Zum debuggen, gibt Pfad der Karten aus welche zu Spielerhand hinzugefügt werden
 			}
 		}
+
+		/* Zum Debuggen, gibt Namen aller Spieler im Spielervector aus
+		int i = 0;
+		System.out.println(spiel.getSpieler().get(i).getName());
+		i++;
+		*/
 	}
 
 	public void onSpielStarten(ActionEvent e) {
 
-		gameGUI = new GameGUI(this, spiel, spielstapel, ablagestapel);
+		gameGUI = new GameGUI(this, spiel);
 	}
 }

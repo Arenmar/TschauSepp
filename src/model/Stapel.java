@@ -72,24 +72,18 @@ public class Stapel {
 		karten.add(new Karte("Schilten", "Ass", 11, getClass().getResource("../cards/schilten14.gif")));
 	}
 
-	public Karte zufaelligeKarte() {
+	public ImageIcon getObersteKarteIcon() {
 
-		int wert = (int) Math.random() * karten.size();
-
-		Karte temp = karten.get(wert);
-		karten.remove(wert);
-
-		return temp;
-	}
-
-	public ImageIcon getObersteKarte() {
-
-		ImageIcon imageIcon = new ImageIcon(karten.get(0).getPfad());
+		ImageIcon imageIcon = new ImageIcon(karten.get(karten.size() - 1).getPfad());
 		Image image = imageIcon.getImage();
 		Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
 		imageIcon = new ImageIcon(newimg);
 
 		return imageIcon;
+	}
+
+	public Karte getObersteKarte() {
+		return karten.get(karten.size() - 1);
 	}
 
 	public ImageIcon getBackside() {
@@ -104,23 +98,27 @@ public class Stapel {
 		return imageIcon;
 	}
 
-	/* Zum Debugen (gibt den Pfad aller Karten aus:
-	public static void main(String[] args) {
+	public Vector<Karte> getDeck() {
 
+		return karten;
+	}
+
+	public void karteHinzufuegen(Karte karte) {
+		karten.add(karte);
+	}
+
+	/* Zum Debugen, gibt den Pfad aller Karten aus:
+	public static void main(String[] args) {
 
 		Stapel spielstapel = new Stapel();
 		spielstapel.print();
 	}
 
 	public void print() {
+
 		for (Karte karte : karten) {
 			System.out.println(karte.getPfad());
 		}
 	}
 	*/
-
-	public Vector<Karte> getKarten() {
-
-		return karten;
-	}
 }

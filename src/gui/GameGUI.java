@@ -6,6 +6,7 @@ import model.Stapel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.Vector;
 
 /**
@@ -19,26 +20,15 @@ import java.util.Vector;
 public class GameGUI extends JDialog {
 
 	private Spiel spiel;
-	private Spieler aktuellerSpieler, gewinner;
 	private int spielerCntr;
-
-	private JButton legen, ziehen, aussetzen, rufeTschau, rufeSepp;
 
 	private JPanel mainPanel, kartenPanel, spielstapelPanel, ablagestapelPanel;
 
 	private JLabel obersteKarte, backside;
 
-	public GameGUI (JFrame parent, Spiel spiel, Stapel spielstapel, Stapel ablagestapel) {
+	public GameGUI (JFrame parent, Spiel spiel) {
 
-		aktuellerSpieler = spiel.getSpieler().get(spielerCntr);
-
-		gewinner = null;
-
-		legen = new JButton();
-		ziehen = new JButton();
-		aussetzen = new JButton();
-		rufeTschau = new JButton();
-		rufeSepp = new JButton();
+		spielerCntr = 0;
 
 		mainPanel = new JPanel();
 		kartenPanel = new JPanel();
@@ -48,7 +38,7 @@ public class GameGUI extends JDialog {
 		obersteKarte = new JLabel();
 		backside = new JLabel();
 
-		playerSetup(spiel, spielstapel, ablagestapel);
+		playerSetup(spiel);
 		init();
 		gameSetup();
 		pack();
@@ -77,12 +67,12 @@ public class GameGUI extends JDialog {
 		backside.setIcon(getBackside());
 	}
 
-	public void playerSetup(Spiel spiel, Stapel spielstapel, Stapel ablagestapel) {
+	public void playerSetup(Spiel spiel) {
 
 		switch (spiel.getSpieler().size()) {
 			case 1:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(0, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(kartenPanel);
@@ -93,35 +83,35 @@ public class GameGUI extends JDialog {
 				break;
 			case 2:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(0, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(kartenPanel);
-				mainPanel.add(new PlayerGUI(1, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(1, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				break;
 			case 3:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(0, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
 				mainPanel.add(new JPanel());
 				mainPanel.add(kartenPanel);
-				mainPanel.add(new PlayerGUI(1, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(1, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(2, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(2, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
 				break;
 			case 4:
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(0, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(0, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(1, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(1, spiel, spielerCntr));
 				mainPanel.add(kartenPanel);
-				mainPanel.add(new PlayerGUI(2, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(2, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
-				mainPanel.add(new PlayerGUI(3, spielstapel, ablagestapel, spiel, spielerCntr));
+				mainPanel.add(new PlayerGUI(3, spiel, spielerCntr));
 				mainPanel.add(new JPanel());
 				break;
 		}
@@ -131,7 +121,7 @@ public class GameGUI extends JDialog {
 
 		Stapel stapel = new Stapel();
 
-		return stapel.getObersteKarte();
+		return stapel.getObersteKarteIcon();
 	}
 
 	public ImageIcon getBackside() {
@@ -141,12 +131,15 @@ public class GameGUI extends JDialog {
 		return stapel.getBackside();
 	}
 
-	private void nextPlayer(Vector<Spieler> spielerListe) {
-		aktuellerSpieler = spielerListe.get(spielerCntr);
-		if (spielerCntr == spielerListe.size() - 1) {
-			spielerCntr = 0;
-		} else {
-			spielerCntr++;
-		}
+	public void karteAnzeigen() {
+
+		URL url = getClass().getResource();
+
+		ImageIcon imageIcon = new ImageIcon(url);
+		Image image = imageIcon.getImage();
+		Image newimg = image.getScaledInstance(150, 225, Image.SCALE_SMOOTH);
+		imageIcon = new ImageIcon(newimg);
+
+		obersteKarte.setIcon(imageIcon);
 	}
 }

@@ -17,6 +17,7 @@ public class Spieler {
 	private int punkte;
 	private boolean hatTschau;
 	private boolean hatSepp;
+	private boolean aktuellerSpieler;
 
 	public Spieler(String name) {
 		this.name = name;
@@ -38,6 +39,10 @@ public class Spieler {
 
 	}
 
+	public void entferneKarte(Karte karte) {
+		hand.remove(karte);
+	}
+
 	public int getPunkte() {
 		return punkte;
 	}
@@ -46,7 +51,7 @@ public class Spieler {
 
 	}
 
-	public Vector<Karte> getKarten() {
+	public Vector<Karte> getHand() {
 		return hand;
 	}
 
@@ -56,4 +61,11 @@ public class Spieler {
 	}
 	 */
 
+	public boolean isAktuellerSpieler() {
+		return aktuellerSpieler;
+	}
+
+	public void setAktuellerSpieler(boolean aktuellerSpieler) {
+		this.aktuellerSpieler = aktuellerSpieler;
+	}
 }
