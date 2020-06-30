@@ -47,42 +47,39 @@ public class Spiel extends Observable {
 
 	}
 
-	public boolean getAktuellerSpieler() {
+	public Spieler getAktuellerSpieler() {
 
 		for (int i = 0; i < spielerListe.size(); i++) {
 			if (spielerListe.get(i).isAktuellerSpieler()) {
 				System.out.println("Aktueller Spieler:" + spielerListe.get(i).getName());
-				return spielerListe.get(i).isAktuellerSpieler();
-			} else {
-				return null;
+				return spielerListe.get(i);
 			}
 		}
+		return null;
 	}
 
 
-
 	public void zieheKarten(Spieler spieler) {
+
 
 	}
 
 	public void spieleKarte(Spieler spieler, int selectedIndex) {
 
-		if (spieler.isAktuellerSpieler()) {
+		Karte karte = spieler.getHand().get(selectedIndex);
 
-			Karte karte = spieler.getHand().get(selectedIndex);
-
-			System.out.println(ablagestapel.getObersteKarte().getBezeichnung());
-			System.out.println(ablagestapel.getObersteKarte().getZahl());
-			System.out.println(karte.getBezeichnung());
-			System.out.println(karte.getZahl());
-			if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(karte.getBezeichnung()) ||
+		System.out.println(ablagestapel.getObersteKarte().getBezeichnung());
+		System.out.println(ablagestapel.getObersteKarte().getZahl());
+		System.out.println(karte.getBezeichnung());
+		System.out.println(karte.getZahl());
+		if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(karte.getBezeichnung()) ||
 				ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(karte.getZahl())) {
 
-				spieler.entferneKarte(karte);
-				ablagestapel.karteHinzufuegen(karte);
-				gameGUI.karteAnzeigen();
-			}
+			spieler.entferneKarte(karte);
+			ablagestapel.karteHinzufuegen(karte);
+			gameGUI.karteAnzeigen();
 		}
+
 		setChanged();
 		notifyObservers();
 	}
@@ -135,7 +132,9 @@ public class Spiel extends Observable {
 		return aktuellerSpieler;
 	}
 
-	public void setNextPlayer() {
+	public void setNextPlayer(Spieler aktuellerSpieler) {
+
+		this.aktuellerSpieler = aktuellerSpieler;
 
 		for (int i = 0; i < spielerListe.size(); i++) {
 			if (spielerListe.get(i).equals(aktuellerSpieler)) {

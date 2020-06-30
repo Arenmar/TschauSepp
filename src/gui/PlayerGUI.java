@@ -53,9 +53,9 @@ public class PlayerGUI extends JPanel implements Observer {
 		legen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.getAktuellerSpieler();
-				spiel.spieleKarte(spiel.ersterSpieler(index), kartenListe.getSelectedIndex());
-				spiel.setNextPlayer();
+				spiel.ersterSpieler(0);
+				spiel.spieleKarte(spiel.getAktuellerSpieler(), kartenListe.getSelectedIndex());
+				spiel.setNextPlayer(spiel.getAktuellerSpieler());
 			}
 		});
 
@@ -63,7 +63,7 @@ public class PlayerGUI extends JPanel implements Observer {
 		ziehen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.zieheKarten();
+				spiel.zieheKarten(spiel.getAktuellerSpieler());
 			}
 		});
 
