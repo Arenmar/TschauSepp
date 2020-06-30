@@ -1,5 +1,6 @@
 package gui;
 
+import model.Karte;
 import model.Spiel;
 import model.Spieler;
 import model.Stapel;
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 /**
  * gui.StartGUI
@@ -78,6 +80,7 @@ public class StartGUI extends JFrame {
 	}
 
 	public void init() {
+
 		getContentPane().add(mainPanel);
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(alleSpielerPanel, BorderLayout.CENTER);
@@ -92,6 +95,7 @@ public class StartGUI extends JFrame {
 	}
 
 	public void onSpielerHinzufuegen(ActionEvent e) {
+
 		if (name.getText().equals("")) {
 			errorGUI = new ErrorGUI(this);
 		} else {
@@ -102,13 +106,15 @@ public class StartGUI extends JFrame {
 			alleSpielerPanel.revalidate();
 
 			for (int i = 0; i < 7; i++) {
-				spieler.fuegeKarteZuHandHinzu(spielstapel.zufaelligeKarte());
+				spieler.fuegeKarteZuHandHinzu(spielstapel.getKarten().get(0));
+				spielstapel.getKarten().remove(0);
 				//System.out.println(austeilstapel.zufaelligeKarte().getPfad()); <-- Zum debuggen, gibt Pfad der Karten aus welche zu Spielerhand hinzugefügt werden
 			}
 		}
 	}
 
 	public void onSpielStarten(ActionEvent e) {
+
 		gameGUI = new GameGUI(this, spiel, spielstapel, ablagestapel);
 	}
 }

@@ -20,6 +20,7 @@ public class Stapel {
 	private Vector<Karte> karten;
 
 	public Stapel() {
+
 		karten = new Vector<Karte>();
 
 		neuerStapel();
@@ -29,6 +30,7 @@ public class Stapel {
 	}
 
 	public void neuerStapel() {
+
 		karten.add(new Karte("Eichel", "6", 6, getClass().getResource("../cards/eichel6.gif")));
 		karten.add(new Karte("Eichel", "7", 7, getClass().getResource("../cards/eichel7.gif")));
 		karten.add(new Karte("Eichel", "8", 8, getClass().getResource("../cards/eichel8.gif")));
@@ -68,10 +70,6 @@ public class Stapel {
 		karten.add(new Karte("Schilten", "Ober", 3, getClass().getResource("../cards/schilten12.gif")));
 		karten.add(new Karte("Schilten", "König", 4, getClass().getResource("../cards/schilten13.gif")));
 		karten.add(new Karte("Schilten", "Ass", 11, getClass().getResource("../cards/schilten14.gif")));
-	}
-
-	public void loadBack() {
-
 	}
 
 	public Karte zufaelligeKarte() {
@@ -120,4 +118,9 @@ public class Stapel {
 		}
 	}
 	*/
+
+	public Vector<Karte> getKarten() {
+
+		return karten;
+	}
 }
