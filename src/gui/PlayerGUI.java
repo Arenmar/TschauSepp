@@ -98,6 +98,6 @@ public class PlayerGUI extends JPanel {
 
 	public void onZiehen(ActionEvent e, Stapel spielstapel, Vector<Spieler> spielerVector) {
 
-		 //spielerVector.get()spielstapel.getObersteKarte()
+
 	}
 }
