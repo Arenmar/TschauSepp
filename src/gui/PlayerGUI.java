@@ -1,6 +1,7 @@
 package gui;
 
 import model.Karte;
+import model.Spiel;
 import model.Spieler;
 import model.Stapel;
 
@@ -8,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import java.util.Vector;
 
 /**
@@ -35,7 +35,7 @@ public class PlayerGUI extends JPanel {
 
 	private DefaultListModel defaultListModel;
 
-	public PlayerGUI(int index, Vector<Spieler> spielerVector, Stapel spielstapel) {
+	public PlayerGUI(int index, Vector<Spieler> spielerVector, Stapel spielstapel, Stapel ablagestapel, Spiel spiel, int spielerCntr) {
 
 		this.index = index;
 
@@ -48,7 +48,7 @@ public class PlayerGUI extends JPanel {
 		ziehen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				onZiehen(e, spielstapel, spielerVector);
+				spiel.spieleKarte(spielerVector.get())
 			}
 		});
 
@@ -96,7 +96,7 @@ public class PlayerGUI extends JPanel {
 		buttonPanel.add(rufeSepp);
 	}
 
-	public void onZiehen(ActionEvent e, Stapel spielstapel, Vector<Spieler> spielerVector) {
+	public void onLegen(ActionEvent e, Stapel ablagestapel, Karte zulegendeKarte, GameGUI gameGUI) {
 
 
 	}
