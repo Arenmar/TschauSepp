@@ -33,8 +33,6 @@ public class PlayerGUI extends JPanel implements Observer {
 	private final JScrollPane scrollPane;
 	private final JList kartenListe;
 	private final DefaultListModel defaultListModel;
-	private LegenerrorGUI legenerrorGUI;
-	private KeineKarteErrorGUI keineKarteErrorGUI;
 
 	public PlayerGUI(int index, Spiel spiel) {
 
@@ -204,10 +202,10 @@ public class PlayerGUI extends JPanel implements Observer {
 				}
 
 			} else {
-				legenerrorGUI = new LegenerrorGUI(this);
+				LegenerrorGUI legenerrorGUI = new LegenerrorGUI(this);
 			}
 		} catch (ArrayIndexOutOfBoundsException ex) {
-			keineKarteErrorGUI = new KeineKarteErrorGUI(this);
+			KeineKarteErrorGUI keineKarteErrorGUI = new KeineKarteErrorGUI(this);
 		}
 	}
 
