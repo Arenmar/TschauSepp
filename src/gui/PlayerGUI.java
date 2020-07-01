@@ -2,7 +2,6 @@ package gui;
 
 import model.Karte;
 import model.Spiel;
-import model.Spieler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,23 +20,21 @@ import java.util.Observer;
 
 public class PlayerGUI extends JPanel implements Observer {
 
-	private Spiel spiel;
+	private final Spiel spiel;
+	private final int index;
+	private final JPanel mainPanel;
+	private final JPanel kartenPanel;
+	private final JPanel buttonPanel;
+	private final JButton legen;
+	private final JButton ziehen;
+	private final JButton rufeTschau;
+	private final JButton rufeSepp;
+	private final JLabel name;
+	private final JScrollPane scrollPane;
+	private final JList kartenListe;
+	private final DefaultListModel defaultListModel;
 	private LegenerrorGUI legenerrorGUI;
 	private KeineKarteErrorGUI keineKarteErrorGUI;
-
-	private int index;
-
-	private JPanel mainPanel, kartenPanel, buttonPanel;
-
-	private JButton legen, ziehen, rufeTschau, rufeSepp;
-
-	private JLabel name;
-
-	private JScrollPane scrollPane;
-
-	private JList kartenListe;
-
-	private DefaultListModel defaultListModel;
 
 	public PlayerGUI(int index, Spiel spiel) {
 
@@ -54,7 +51,7 @@ public class PlayerGUI extends JPanel implements Observer {
 		legen = new JButton("Legen");
 		legen.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) throws ArrayIndexOutOfBoundsException{
+			public void actionPerformed(ActionEvent e) throws ArrayIndexOutOfBoundsException {
 
 				try {
 					if (spiel.checkMove(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex())) {
@@ -98,7 +95,7 @@ public class PlayerGUI extends JPanel implements Observer {
 					} else {
 						legenerrorGUI = new LegenerrorGUI(this);
 					}
-				} catch(ArrayIndexOutOfBoundsException ex) {
+				} catch (ArrayIndexOutOfBoundsException ex) {
 					keineKarteErrorGUI = new KeineKarteErrorGUI(this);
 				}
 			}
