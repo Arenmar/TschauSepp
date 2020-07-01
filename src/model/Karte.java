@@ -7,46 +7,49 @@ import java.net.URL;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 27-06-2020
+ * @Date: 27 -06-2020
  */
-
 public class Karte {
 
 	private String bezeichnung, zahl;
-	private int wert;
 	private URL pfad;
 
+	/**
+	 * Instantiates a new Karte.
+	 *
+	 * @param bezeichnung the bezeichnung
+	 * @param zahl        the zahl
+	 * @param pfad        the pfad
+	 */
 	public Karte(String bezeichnung, String zahl, int wert, URL pfad) {
 		this.bezeichnung = bezeichnung;
 		this.zahl = zahl;
-		this.wert = wert;
 		this.pfad = pfad;
 	}
 
+	/**
+	 * Gets bezeichnung.
+	 *
+	 * @return the bezeichnung
+	 */
 	public String getBezeichnung() {
 		return bezeichnung;
 	}
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
-	}
-
-	public int getWert() {
-		return wert;
-	}
-
-	public void setWert(int wert) {
-		this.wert = wert;
-	}
-
+	/**
+	 * Gets pfad.
+	 *
+	 * @return the pfad
+	 */
 	public URL getPfad() {
 		return pfad;
 	}
 
-	public void setPfad(URL pfad) {
-		this.pfad = pfad;
-	}
-
+	/**
+	 * Gets zahl.
+	 *
+	 * @return the zahl
+	 */
 	public String getZahl() {
 		return zahl;
 	}

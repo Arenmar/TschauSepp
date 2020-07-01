@@ -12,13 +12,15 @@ import java.util.Vector;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 27-06-2020
+ * @Date: 27 -06-2020
  */
-
 public class Stapel {
 
 	private Vector<Karte> karten;
 
+	/**
+	 * Instantiates a new Stapel.
+	 */
 	public Stapel() {
 
 		karten = new Vector<Karte>();
@@ -29,6 +31,9 @@ public class Stapel {
 		Collections.shuffle(karten);
 	}
 
+	/**
+	 * Creates a new deck of cards.
+	 */
 	public void neuerStapel() {
 
 		karten.add(new Karte("Eichel", "6", 6, getClass().getResource("../cards/eichel6.gif")));
@@ -72,6 +77,11 @@ public class Stapel {
 		karten.add(new Karte("Schilten", "Ass", 11, getClass().getResource("../cards/schilten14.gif")));
 	}
 
+	/**
+	 * Gets the icon of the top card on the deck.
+	 *
+	 * @return the icon of the top card
+	 */
 	public ImageIcon getObersteKarteIcon() {
 
 		ImageIcon imageIcon = new ImageIcon(karten.get(karten.size() - 1).getPfad());
@@ -82,10 +92,20 @@ public class Stapel {
 		return imageIcon;
 	}
 
+	/**
+	 * Gets the top card as an object.
+	 *
+	 * @return the top card
+	 */
 	public Karte getObersteKarte() {
 		return karten.get(karten.size() - 1);
 	}
 
+	/**
+	 * Gets backside.
+	 *
+	 * @return the backside
+	 */
 	public ImageIcon getBackside() {
 
 		URL url = getClass().getResource("../cards/back.jpg");
@@ -98,16 +118,31 @@ public class Stapel {
 		return imageIcon;
 	}
 
+	/**
+	 * Gets deck.
+	 *
+	 * @return the deck
+	 */
 	public Vector<Karte> getDeck() {
 
 		return karten;
 	}
 
+	/**
+	 * Adds card to the deck.
+	 *
+	 * @param karte the card
+	 */
 	public void karteHinzufuegen(Karte karte) {
 
 		karten.add(karte);
 	}
 
+	/**
+	 * Gets path of last layed card.
+	 *
+	 * @return the url
+	 */
 	public URL zuletztGelegteKarteURL() {
 		return karten.get(karten.size() - 1).getPfad();
 	}
