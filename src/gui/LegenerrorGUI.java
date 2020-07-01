@@ -12,7 +12,7 @@ public class LegenerrorGUI extends JDialog {
 
 	private GridBagConstraints gbc;
 
-	public LegenerrorGUI(ActionListener parent) {
+	public LegenerrorGUI(PlayerGUI parent) {
 
 		init();
 		pack();

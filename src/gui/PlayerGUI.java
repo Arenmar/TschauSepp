@@ -52,54 +52,8 @@ public class PlayerGUI extends JPanel implements Observer {
 		legen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) throws ArrayIndexOutOfBoundsException {
-
-				try {
-					if (spiel.checkMove(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex())) {
-
-						if (!spiel.getEinzelnerSpieler().isHatSepp() && spiel.getEinzelnerSpieler().getHand().size() == 1) {
-
-							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
-							for (int i = 0; i < 4; i++) {
-								spiel.zieheKarten(spiel.getEinzelnerSpieler());
-								onZiehen();
-							}
-							spiel.setNextPlayer();
-							rufeTschau.setBackground(Color.RED);
-
-						} else if (!spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
-
-							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
-							for (int i = 0; i < 2; i++) {
-								spiel.zieheKarten(spiel.getEinzelnerSpieler());
-								onZiehen();
-							}
-							spiel.setNextPlayer();
-							rufeTschau.setBackground(Color.RED);
-
-						} else if (spiel.getEinzelnerSpieler().isHatSepp()) {
-
-							spiel.beendeSpiel(spiel.getEinzelnerSpieler());
-
-						} else if (spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
-
-							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
-							spiel.setNextPlayer();
-							rufeTschau.setBackground(Color.RED);
-
-						} else {
-							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
-							spiel.setNextPlayer();
-							rufeTschau.setBackground(Color.RED);
-						}
-
-					} else {
-						legenerrorGUI = new LegenerrorGUI(this);
-					}
-				} catch (ArrayIndexOutOfBoundsException ex) {
-					keineKarteErrorGUI = new KeineKarteErrorGUI(this);
-				}
+				onLegen();
 			}
-
 		});
 
 		ziehen = new JButton("Ziehen");
@@ -185,6 +139,7 @@ public class PlayerGUI extends JPanel implements Observer {
 	}
 
 	public void renderPlayerGUI() {
+
 		mainPanel.setBackground(Color.RED);
 		legen.setEnabled(true);
 		rufeTschau.setEnabled(spiel.getEinzelnerSpieler().getHand().size() == 2);
@@ -194,6 +149,7 @@ public class PlayerGUI extends JPanel implements Observer {
 	}
 
 	public void unrenderPlayerGUI() {
+
 		mainPanel.setBackground(null);
 		legen.setEnabled(false);
 		rufeTschau.setEnabled(false);
@@ -201,6 +157,60 @@ public class PlayerGUI extends JPanel implements Observer {
 		ziehen.setEnabled(false);
 		repaint();
 	}
+
+	public void onLegen() {
+
+		try {
+			if (spiel.checkMove(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex())) {
+
+				if (!spiel.getEinzelnerSpieler().isHatSepp() && spiel.getEinzelnerSpieler().getHand().size() == 1) {
+
+					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+
+					for (int i = 0; i < 4; i++) {
+						spiel.zieheKarten(spiel.getEinzelnerSpieler());
+						onZiehen();
+					}
+
+					spiel.setNextPlayer();
+					rufeTschau.setBackground(Color.RED);
+
+				} else if (spiel.getEinzelnerSpieler().isHatSepp()) {
+
+					spiel.beendeSpiel(spiel.getEinzelnerSpieler());
+
+				} else if (!spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
+
+					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+
+					for (int i = 0; i < 2; i++) {
+						spiel.zieheKarten(spiel.getEinzelnerSpieler());
+						onZiehen();
+					}
+
+					spiel.setNextPlayer();
+					rufeTschau.setBackground(Color.RED);
+
+				}  else if (spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
+
+					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+					spiel.setNextPlayer();
+					rufeTschau.setBackground(Color.RED);
+
+				} else {
+					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+					spiel.setNextPlayer();
+					rufeTschau.setBackground(Color.RED);
+				}
+
+			} else {
+				legenerrorGUI = new LegenerrorGUI(this);
+			}
+		} catch (ArrayIndexOutOfBoundsException ex) {
+			keineKarteErrorGUI = new KeineKarteErrorGUI(this);
+		}
+	}
+
 
 	public void onZiehen() {
 
@@ -223,4 +233,5 @@ public class PlayerGUI extends JPanel implements Observer {
 		rufeTschau.setBackground(Color.GREEN);
 		spiel.getEinzelnerSpieler().setHatTschau(true);
 	}
+
 }

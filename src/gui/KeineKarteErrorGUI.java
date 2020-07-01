@@ -18,7 +18,7 @@ public class KeineKarteErrorGUI extends JDialog {
 
 	private JLabel message;
 
-	public KeineKarteErrorGUI(ActionListener parent) {
+	public KeineKarteErrorGUI(PlayerGUI parent) {
 
 		init();
 		pack();

@@ -92,7 +92,7 @@ public class StartGUI extends JFrame {
 			name.setText(null);
 			alleSpielerPanel.revalidate();
 
-			for (int i = 0; i < 7; i++) {
+			for (int i = 0; i < 3; i++) {
 				spieler.fuegeKarteZuHandHinzu(spiel.getSpielstapel().getDeck().get(0));
 				spiel.getSpielstapel().getDeck().remove(0);
 				//System.out.println(austeilstapel.zufaelligeKarte().getPfad()); <-- Zum debuggen, gibt Pfad der Karten aus welche zu Spielerhand hinzugefügt werden
