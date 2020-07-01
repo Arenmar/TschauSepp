@@ -35,17 +35,8 @@ public class Spiel extends Observable {
 		spielerCntr = 0;
 	}
 
-	public Boolean beendeSpiel() {
-
-		for (int i = 0; i < spielerListe.size(); i++) {
-			if (spielerListe.get(i).getHand().size() == 0) {
-				gameGUI.spielende(getEinzelnerSpieler());
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return null;
+	public void beendeSpiel(Spieler spieler) {
+		gameGUI.spielende(getEinzelnerSpieler());
 	}
 
 	public Karte zieheKarten(Spieler spieler) {
@@ -107,14 +98,6 @@ public class Spiel extends Observable {
 			}
 		}
 		return null;
-	}
-
-	public void rufeTschau(Spieler spieler) {
-
-	}
-
-	public void rufeSepp() {
-
 	}
 
 	public Vector<Spieler> getAlleSpieler() {

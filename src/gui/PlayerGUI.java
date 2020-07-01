@@ -56,7 +56,9 @@ public class PlayerGUI extends JPanel implements Observer {
 			public void actionPerformed(ActionEvent e) {
 				if (spiel.checkMove(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex())) {
 					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
-					spiel.beendeSpiel();
+					if (onSepp()) {
+						spiel.beendeSpiel(spiel.getEinzelnerSpieler());
+					}
 					spiel.setNextPlayer();
 				} else {
 					legenerrorGUI = new LegenerrorGUI(this);
@@ -69,17 +71,31 @@ public class PlayerGUI extends JPanel implements Observer {
 		ziehen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spiel.beendeSpiel();
 				spiel.neuesDeck();
 				spiel.zieheKarten(spiel.getEinzelnerSpieler());
 				onZiehen();
-				spiel.beendeSpiel();
+				spiel.beendeSpiel(spiel.getEinzelnerSpieler());
 				spiel.setNextPlayer();
 			}
 		});
 
 		rufeTschau = new JButton("Tschau");
+		rufeTschau.setForeground(Color.RED);
+		rufeTschau.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rufeTschau.setForeground(Color.GREEN);
+			}
+		});
+
 		rufeSepp = new JButton("Sepp");
+		rufeSepp.setForeground(Color.RED);
+		rufeSepp.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				onSepp();
+			}
+		});
 
 		name = new JLabel(spiel.getAlleSpieler().get(index).getName());
 
@@ -137,9 +153,9 @@ public class PlayerGUI extends JPanel implements Observer {
 	public void renderPlayerGUI() {
 		mainPanel.setBackground(Color.RED);
 		legen.setEnabled(true);
-		rufeTschau.setEnabled(true);
-		rufeSepp.setEnabled(true);
-		ziehen.setEnabled(true);
+		rufeTschau.setEnabled(spiel.getEinzelnerSpieler().getHand().size() == 2);
+		rufeSepp.setEnabled(spiel.getEinzelnerSpieler().getHand().size() == 1);
+		ziehen.setEnabled(spiel.checkPlayable(spiel.getEinzelnerSpieler()));
 		repaint();
 	}
 
@@ -162,5 +178,10 @@ public class PlayerGUI extends JPanel implements Observer {
 			imageIcon = new ImageIcon(newimg);
 			defaultListModel.addElement(imageIcon);
 		}
+	}
+
+	private Boolean onSepp() {
+		rufeSepp.setForeground(Color.GREEN);
+		return true;
 	}
 }

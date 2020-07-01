@@ -16,7 +16,7 @@ public class LegenerrorGUI extends JDialog {
 
 		init();
 		pack();
-		centerFrame();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
@@ -35,16 +35,5 @@ public class LegenerrorGUI extends JDialog {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		mainPanel.add(message);
-	}
-
-	public void centerFrame() {
-
-		Dimension windowSize = getSize();
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Point centerPoint = ge.getCenterPoint();
-
-		int dx = centerPoint.x - windowSize.width / 2;
-		int dy = centerPoint.y - windowSize.height / 2;
-		setLocation(dx, dy);
 	}
 }
