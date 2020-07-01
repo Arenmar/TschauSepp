@@ -41,7 +41,7 @@ public class GameGUI extends JFrame {
 		playerSetup(spiel);
 		init();
 		pack();
-		centerFrame();
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 	}
@@ -160,17 +160,6 @@ public class GameGUI extends JFrame {
 
 		winnerGUI = new WinnerGUI(spieler, getSize());
 		setVisible(false);
-	}
-
-	public void centerFrame() {
-
-		Dimension windowSize = getSize();
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Point centerPoint = ge.getCenterPoint();
-
-		int dx = centerPoint.x - windowSize.width / 2;
-		int dy = centerPoint.y - windowSize.height / 2;
-		setLocation(dx, dy);
 	}
 
 	public Dimension getSize() {

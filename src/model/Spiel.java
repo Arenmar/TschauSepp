@@ -2,6 +2,7 @@ package model;
 
 import gui.GameGUI;
 import gui.PlayerGUI;
+import gui.WinnerGUI;
 
 import java.util.Observable;
 import java.util.Vector;
@@ -16,9 +17,8 @@ import java.util.Vector;
 
 public class Spiel extends Observable {
 
-	private int anzKartenZuZiehen, spielerCntr;
+	private int spielerCntr;
 	private Stapel spielstapel, ablagestapel;
-	private Karte letzteKarte;
 	private Vector<Spieler> spielerListe;
 	private Vector<PlayerGUI> allePlayerGUIs;
 	private GameGUI gameGUI;
@@ -36,7 +36,8 @@ public class Spiel extends Observable {
 	}
 
 	public void beendeSpiel(Spieler spieler) {
-		gameGUI.spielende(getEinzelnerSpieler());
+
+		gameGUI.spielende(spieler);
 	}
 
 	public Karte zieheKarten(Spieler spieler) {
@@ -87,17 +88,16 @@ public class Spiel extends Observable {
 
 	public Boolean checkPlayable(Spieler spieler) {
 
+		boolean temp = false;
+
 		for (int i = 0; i < spieler.getHand().size(); i++) {
 			if (ablagestapel.getObersteKarte().getBezeichnung().equalsIgnoreCase(spieler.getHand().get(i).getBezeichnung()) ||
 				ablagestapel.getObersteKarte().getZahl().equalsIgnoreCase(spieler.getHand().get(i).getZahl())) {
 
-				return false;
-			} else {
-
-				return true;
+				temp = true;
 			}
 		}
-		return null;
+		return temp;
 	}
 
 	public Vector<Spieler> getAlleSpieler() {

@@ -2,24 +2,23 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
- * gui.ErrorGUI
+ * gui.KeineKarteErrorGUI
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 28-06-2020
+ * @Date: 01-07-2020
  */
 
-public class ErrorGUI extends JDialog {
+public class KeineKarteErrorGUI extends JDialog {
 
 	private JPanel mainPanel;
 
 	private JLabel message;
 
-	private GridBagConstraints gbc;
-
-	public ErrorGUI(JFrame parent) {
+	public KeineKarteErrorGUI(ActionListener parent) {
 
 		init();
 		pack();
@@ -31,18 +30,10 @@ public class ErrorGUI extends JDialog {
 
 		mainPanel = new JPanel();
 
-		message = new JLabel("Bitte einen Namen eingeben");
-
-		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(1,1,1,1);
+		message = new JLabel("Keine Karte zum Legen ausgewählt");
 
 		getContentPane().add(mainPanel);
-
-		mainPanel.setLayout(new GridBagLayout());
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(message);
 	}
 }
-

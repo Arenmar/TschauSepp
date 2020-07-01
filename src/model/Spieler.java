@@ -27,42 +27,31 @@ public class Spieler {
 		return name;
 	}
 
-	public int getAnzKarten(Spieler spieler) {
-		return hand.size();
-	}
-
 	public void fuegeKarteZuHandHinzu(Karte karte) {
 		hand.add(karte);
-	}
-
-	public void entferneAlleKarten() {
-
 	}
 
 	public void entferneKarte(Karte karte) {
 		hand.remove(karte);
 	}
 
-	public int getPunkte() {
-		return punkte;
-	}
-
-	public void fuegePunkteHinzu(Spieler spieler, int punkte) {
-
-	}
-
 	public Vector<Karte> getHand() {
 		return hand;
 	}
 
-	public boolean isAktuellerSpieler() {
-		if (aktuellerSpieler) {
-			return true;
-		}
-		return false;
+	public void setHatTschau(boolean hatTschau) {
+		this.hatTschau = hatTschau;
 	}
 
-	public void setAktuellerSpieler(boolean aktuellerSpieler) {
-		this.aktuellerSpieler = aktuellerSpieler;
+	public boolean isHatTschau() {
+		return hatTschau;
+	}
+
+	public void setHatSepp(boolean hatSepp) {
+		this.hatSepp = hatSepp;
+	}
+
+	public boolean isHatSepp() {
+		return hatSepp;
 	}
 }

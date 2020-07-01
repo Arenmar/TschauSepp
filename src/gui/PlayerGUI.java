@@ -23,6 +23,7 @@ public class PlayerGUI extends JPanel implements Observer {
 
 	private Spiel spiel;
 	private LegenerrorGUI legenerrorGUI;
+	private KeineKarteErrorGUI keineKarteErrorGUI;
 
 	private int index;
 
@@ -53,15 +54,52 @@ public class PlayerGUI extends JPanel implements Observer {
 		legen = new JButton("Legen");
 		legen.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (spiel.checkMove(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex())) {
-					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
-					if (onSepp()) {
-						spiel.beendeSpiel(spiel.getEinzelnerSpieler());
+			public void actionPerformed(ActionEvent e) throws ArrayIndexOutOfBoundsException{
+
+				try {
+					if (spiel.checkMove(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex())) {
+
+						if (!spiel.getEinzelnerSpieler().isHatSepp() && spiel.getEinzelnerSpieler().getHand().size() == 1) {
+
+							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+							for (int i = 0; i < 4; i++) {
+								spiel.zieheKarten(spiel.getEinzelnerSpieler());
+								onZiehen();
+							}
+							spiel.setNextPlayer();
+							rufeTschau.setBackground(Color.RED);
+
+						} else if (!spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
+
+							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+							for (int i = 0; i < 2; i++) {
+								spiel.zieheKarten(spiel.getEinzelnerSpieler());
+								onZiehen();
+							}
+							spiel.setNextPlayer();
+							rufeTschau.setBackground(Color.RED);
+
+						} else if (spiel.getEinzelnerSpieler().isHatSepp()) {
+
+							spiel.beendeSpiel(spiel.getEinzelnerSpieler());
+
+						} else if (spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
+
+							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+							spiel.setNextPlayer();
+							rufeTschau.setBackground(Color.RED);
+
+						} else {
+							spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+							spiel.setNextPlayer();
+							rufeTschau.setBackground(Color.RED);
+						}
+
+					} else {
+						legenerrorGUI = new LegenerrorGUI(this);
 					}
-					spiel.setNextPlayer();
-				} else {
-					legenerrorGUI = new LegenerrorGUI(this);
+				} catch(ArrayIndexOutOfBoundsException ex) {
+					keineKarteErrorGUI = new KeineKarteErrorGUI(this);
 				}
 			}
 
@@ -74,26 +112,25 @@ public class PlayerGUI extends JPanel implements Observer {
 				spiel.neuesDeck();
 				spiel.zieheKarten(spiel.getEinzelnerSpieler());
 				onZiehen();
-				spiel.beendeSpiel(spiel.getEinzelnerSpieler());
 				spiel.setNextPlayer();
 			}
 		});
 
 		rufeTschau = new JButton("Tschau");
-		rufeTschau.setForeground(Color.RED);
+		rufeTschau.setBackground(Color.RED);
 		rufeTschau.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				rufeTschau.setForeground(Color.GREEN);
+				onTschau(e);
 			}
 		});
 
 		rufeSepp = new JButton("Sepp");
-		rufeSepp.setForeground(Color.RED);
+		rufeSepp.setBackground(Color.RED);
 		rufeSepp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				onSepp();
+				onSepp(e);
 			}
 		});
 
@@ -155,7 +192,7 @@ public class PlayerGUI extends JPanel implements Observer {
 		legen.setEnabled(true);
 		rufeTschau.setEnabled(spiel.getEinzelnerSpieler().getHand().size() == 2);
 		rufeSepp.setEnabled(spiel.getEinzelnerSpieler().getHand().size() == 1);
-		ziehen.setEnabled(spiel.checkPlayable(spiel.getEinzelnerSpieler()));
+		ziehen.setEnabled(!spiel.checkPlayable(spiel.getEinzelnerSpieler()));
 		repaint();
 	}
 
@@ -180,8 +217,13 @@ public class PlayerGUI extends JPanel implements Observer {
 		}
 	}
 
-	private Boolean onSepp() {
-		rufeSepp.setForeground(Color.GREEN);
-		return true;
+	private void onSepp(ActionEvent e) {
+		rufeSepp.setBackground(Color.GREEN);
+		spiel.getEinzelnerSpieler().setHatSepp(true);
+	}
+
+	private void onTschau(ActionEvent e) {
+		rufeTschau.setBackground(Color.GREEN);
+		spiel.getEinzelnerSpieler().setHatTschau(true);
 	}
 }

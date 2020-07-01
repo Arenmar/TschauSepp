@@ -28,13 +28,13 @@ public class WinnerGUI extends JFrame {
 
 		init(spieler);
 		setSize(sizeGameWindow);
-		centerFrame();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
 	public void init(Spieler spieler) {
 
-		message = new JLabel("Der Gewinner ist: " + spieler.getName());
+		message = new JLabel("Herzlichen Glückwunsch, der Gewinner ist: " + spieler.getName());
 
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(1,1,1,1);
@@ -47,16 +47,5 @@ public class WinnerGUI extends JFrame {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		mainPanel.add(message, gbc);
-	}
-
-	public void centerFrame() {
-
-		Dimension windowSize = getSize();
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Point centerPoint = ge.getCenterPoint();
-
-		int dx = centerPoint.x - windowSize.width / 2;
-		int dy = centerPoint.y - windowSize.height / 2;
-		setLocation(dx, dy);
 	}
 }
