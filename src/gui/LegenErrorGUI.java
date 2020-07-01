@@ -4,7 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class LegenerrorGUI extends JDialog {
+/**
+ * gui.KeineKarteErrorGUI
+ *
+ * @Author: Martin Arendar
+ * @Version: 1.0
+ * @Date: 01 -07-2020
+ */
+public class LegenErrorGUI extends JDialog {
 
 	private JPanel mainPanel;
 
@@ -12,7 +19,12 @@ public class LegenerrorGUI extends JDialog {
 
 	private GridBagConstraints gbc;
 
-	public LegenerrorGUI(PlayerGUI parent) {
+	/**
+	 * Instantiates a new LegenError gui.
+	 *
+	 * @param parent the parent
+	 */
+	public LegenErrorGUI(PlayerGUI parent) {
 
 		init();
 		pack();
@@ -20,6 +32,9 @@ public class LegenerrorGUI extends JDialog {
 		setVisible(true);
 	}
 
+	/**
+	 * Initializes elements of the LegenErrorGUI.
+	 */
 	public void init() {
 
 		mainPanel = new JPanel();

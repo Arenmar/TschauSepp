@@ -10,9 +10,8 @@ import java.awt.*;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 30-06-2020
+ * @Date: 30 -06-2020
  */
-
 public class WinnerGUI extends JFrame {
 
 	private JLabel message;
@@ -21,6 +20,12 @@ public class WinnerGUI extends JFrame {
 
 	private JPanel mainPanel;
 
+	/**
+	 * Instantiates a new Winner gui.
+	 *
+	 * @param spieler        the spieler
+	 * @param sizeGameWindow the size game window
+	 */
 	public WinnerGUI(Spieler spieler, Dimension sizeGameWindow) {
 
 		super("Gewinner");
@@ -32,6 +37,11 @@ public class WinnerGUI extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Initializes elements of WinnerGUI.
+	 *
+	 * @param spieler the player
+	 */
 	public void init(Spieler spieler) {
 
 		message = new JLabel("Herzlichen Glückwunsch, der Gewinner ist: " + spieler.getName());

@@ -15,9 +15,8 @@ import java.awt.event.ActionListener;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 27-06-2020
+ * @Date: 27 -06-2020
  */
-
 public class StartGUI extends JFrame {
 
 	private Spiel spiel;
@@ -31,6 +30,11 @@ public class StartGUI extends JFrame {
 
 	private JPanel mainPanel, spielerHinzufuegenPanel, alleSpielerPanel;
 
+	/**
+	 * Instantiates a new Start gui.
+	 *
+	 * @param spiel the spiel
+	 */
 	public StartGUI(Spiel spiel) {
 
 		super("Tschau Sepp");
@@ -44,6 +48,9 @@ public class StartGUI extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Initializes elements of the StartGUI.
+	 */
 	public void init() {
 
 		mainPanel = new JPanel();
@@ -81,6 +88,11 @@ public class StartGUI extends JFrame {
 		spielerHinzufuegenPanel.add(name, BorderLayout.NORTH);
 	}
 
+	/**
+	 * Is activated when "+" is pressed.
+	 *
+	 * @param e the ActionEvent
+	 */
 	public void onSpielerHinzufuegen(ActionEvent e) {
 
 		if (name.getText().equals("")) {
@@ -106,6 +118,11 @@ public class StartGUI extends JFrame {
 		*/
 	}
 
+	/**
+	 * Is activated when "Start" is pressed.
+	 *
+	 * @param e the ActionEvent
+	 */
 	public void onSpielStarten(ActionEvent e) {
 
 		if (spiel.getAlleSpieler().size() > 0) {

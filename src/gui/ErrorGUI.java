@@ -8,9 +8,8 @@ import java.awt.*;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 28-06-2020
+ * @Date: 28 -06-2020
  */
-
 public class ErrorGUI extends JDialog {
 
 	private JPanel mainPanel;
@@ -19,6 +18,11 @@ public class ErrorGUI extends JDialog {
 
 	private GridBagConstraints gbc;
 
+	/**
+	 * Instantiates a new Error gui.
+	 *
+	 * @param parent the parent
+	 */
 	public ErrorGUI(JFrame parent) {
 
 		init();
@@ -27,6 +31,9 @@ public class ErrorGUI extends JDialog {
 		setVisible(true);
 	}
 
+	/**
+	 * Initializes elements of the ErrorGUI.
+	 */
 	public void init() {
 
 		mainPanel = new JPanel();

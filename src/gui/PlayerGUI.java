@@ -15,9 +15,8 @@ import java.util.Observer;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 28-06-2020
+ * @Date: 28 -06-2020
  */
-
 public class PlayerGUI extends JPanel implements Observer {
 
 	private final Spiel spiel;
@@ -34,6 +33,12 @@ public class PlayerGUI extends JPanel implements Observer {
 	private final JList kartenListe;
 	private final DefaultListModel defaultListModel;
 
+	/**
+	 * Instantiates a new Player gui.
+	 *
+	 * @param index the index
+	 * @param spiel the spiel
+	 */
 	public PlayerGUI(int index, Spiel spiel) {
 
 		this.index = index;
@@ -106,6 +111,9 @@ public class PlayerGUI extends JPanel implements Observer {
 		init();
 	}
 
+	/**
+	 * Initializes elements of a PlayerGUI.
+	 */
 	public void init() {
 
 		this.add(mainPanel);
@@ -136,6 +144,9 @@ public class PlayerGUI extends JPanel implements Observer {
 		kartenListe.updateUI();
 	}
 
+	/**
+	 * Activates Buttons of a PlayerGUI and changes Color of the current Player.
+	 */
 	public void renderPlayerGUI() {
 
 		mainPanel.setBackground(Color.RED);
@@ -146,6 +157,9 @@ public class PlayerGUI extends JPanel implements Observer {
 		repaint();
 	}
 
+	/**
+	 * Deactivates Buttons of a PlayerGUI and changes Color to the next current Player.
+	 */
 	public void unrenderPlayerGUI() {
 
 		mainPanel.setBackground(null);
@@ -156,6 +170,9 @@ public class PlayerGUI extends JPanel implements Observer {
 		repaint();
 	}
 
+	/**
+	 * Is activated when "legen" is pressed.
+	 */
 	public void onLegen() {
 
 		try {
@@ -170,6 +187,7 @@ public class PlayerGUI extends JPanel implements Observer {
 						onZiehen();
 					}
 
+					spiel.getEinzelnerSpieler().setHatSepp(false);
 					spiel.setNextPlayer();
 					rufeTschau.setBackground(Color.RED);
 
@@ -186,23 +204,26 @@ public class PlayerGUI extends JPanel implements Observer {
 						onZiehen();
 					}
 
+					spiel.getEinzelnerSpieler().setHatTschau(false);
 					spiel.setNextPlayer();
 					rufeTschau.setBackground(Color.RED);
 
 				}  else if (spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
 
 					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
+					spiel.getEinzelnerSpieler().setHatTschau(false);
 					spiel.setNextPlayer();
 					rufeTschau.setBackground(Color.RED);
 
 				} else {
+
 					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
 					spiel.setNextPlayer();
 					rufeTschau.setBackground(Color.RED);
 				}
 
 			} else {
-				LegenerrorGUI legenerrorGUI = new LegenerrorGUI(this);
+				LegenErrorGUI legenerrorGUI = new LegenErrorGUI(this);
 			}
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			KeineKarteErrorGUI keineKarteErrorGUI = new KeineKarteErrorGUI(this);
@@ -210,6 +231,9 @@ public class PlayerGUI extends JPanel implements Observer {
 	}
 
 
+	/**
+	 * Is activated when "ziehen" is pressed.
+	 */
 	public void onZiehen() {
 
 		defaultListModel.removeAllElements();
@@ -222,14 +246,23 @@ public class PlayerGUI extends JPanel implements Observer {
 		}
 	}
 
-	private void onSepp(ActionEvent e) {
-		rufeSepp.setBackground(Color.GREEN);
-		spiel.getEinzelnerSpieler().setHatSepp(true);
-	}
-
+	/**
+	 * Is activated when "Tschau" is pressed.
+	 *
+	 * @Param e the ActionEvent
+	 */
 	private void onTschau(ActionEvent e) {
 		rufeTschau.setBackground(Color.GREEN);
 		spiel.getEinzelnerSpieler().setHatTschau(true);
 	}
 
+	/**
+	 * Is activated when "Sepp" is pressed.
+	 *
+	 * @Param e the ActionEvent
+	 */
+	private void onSepp(ActionEvent e) {
+		rufeSepp.setBackground(Color.GREEN);
+		spiel.getEinzelnerSpieler().setHatSepp(true);
+	}
 }

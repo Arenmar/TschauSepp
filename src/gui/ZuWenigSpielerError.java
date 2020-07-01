@@ -8,9 +8,8 @@ import java.awt.*;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 01-07-2020
+ * @Date: 01 -07-2020
  */
-
 public class ZuWenigSpielerError extends JDialog {
 
 	private JLabel message;
@@ -19,6 +18,11 @@ public class ZuWenigSpielerError extends JDialog {
 
 	private JPanel mainPanel;
 
+	/**
+	 * Instantiates a new ZuWenigSpieler error.
+	 *
+	 * @param parent the parent
+	 */
 	public ZuWenigSpielerError(JFrame parent) {
 
 		init();
@@ -27,6 +31,9 @@ public class ZuWenigSpielerError extends JDialog {
 		setVisible(true);
 	}
 
+	/**
+	 * Initializes elements of ZuWenigSpielerGUI.
+	 */
 	public void init() {
 
 		mainPanel = new JPanel();

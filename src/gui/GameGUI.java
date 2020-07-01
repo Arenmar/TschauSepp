@@ -12,9 +12,8 @@ import java.awt.*;
  *
  * @Author: Martin Arendar
  * @Version: 1.0
- * @Date: 27-06-2020
+ * @Date: 27 -06-2020
  */
-
 public class GameGUI extends JFrame {
 
 	private Spiel spiel;
@@ -24,6 +23,11 @@ public class GameGUI extends JFrame {
 
 	private JLabel obersteKarte, backside;
 
+	/**
+	 * Instantiates a new Game gui.
+	 *
+	 * @param spiel the spiel
+	 */
 	public GameGUI(Spiel spiel) {
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -46,9 +50,10 @@ public class GameGUI extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Initializes elements of the GameGUI.
+	 */
 	public void init() {
-
-
 
 		getContentPane().add(mainPanel);
 		mainPanel.setLayout(new GridLayout(3, 3));
@@ -69,6 +74,11 @@ public class GameGUI extends JFrame {
 		backside.setIcon(getBackside());
 	}
 
+	/**
+	 * Creates the PlayerGUIs.
+	 *
+	 * @param spiel the game
+	 */
 	public void playerSetup(Spiel spiel) {
 
 		switch (spiel.getAlleSpieler().size()) {
@@ -139,6 +149,11 @@ public class GameGUI extends JFrame {
 		}
 	}
 
+	/**
+	 * Gets backside of a card.
+	 *
+	 * @return the backside
+	 */
 	public ImageIcon getBackside() {
 
 		Stapel stapel = new Stapel();
@@ -146,6 +161,9 @@ public class GameGUI extends JFrame {
 		return stapel.getBackside();
 	}
 
+	/**
+	 * Loads an image of a card.
+	 */
 	public void karteAnzeigen() {
 
 		ImageIcon imageIcon = new ImageIcon(spiel.getAblagestapel().zuletztGelegteKarteURL());
@@ -156,6 +174,11 @@ public class GameGUI extends JFrame {
 		obersteKarte.setIcon(imageIcon);
 	}
 
+	/**
+	 * Ends the game.
+	 *
+	 * @param spieler the player
+	 */
 	public void spielende(Spieler spieler) {
 
 		winnerGUI = new WinnerGUI(spieler, getSize());
