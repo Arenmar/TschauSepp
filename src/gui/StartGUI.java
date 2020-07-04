@@ -57,22 +57,16 @@ public class StartGUI extends JFrame {
 		spielerHinzufuegenPanel = new JPanel();
 		alleSpielerPanel = new JPanel();
 
-		name = new JTextField();
+		name = new JTextField(20);
 
 		spielerHinzufuegen = new JButton("+");
-		spielerHinzufuegen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				onSpielerHinzufuegen(e);
-			}
+		spielerHinzufuegen.addActionListener(e -> {
+			onSpielerHinzufuegen();
 		});
 
 		spielStarten = new JButton("Start");
-		spielStarten.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				onSpielStarten(e);
-			}
+		spielStarten.addActionListener(e ->  {
+			onSpielStarten();
 		});
 
 		getContentPane().add(mainPanel);
@@ -89,11 +83,26 @@ public class StartGUI extends JFrame {
 	}
 
 	/**
-	 * Is activated when "+" is pressed.
+	 * Is activated when "Start" is pressed.
 	 *
 	 * @param e the ActionEvent
 	 */
-	public void onSpielerHinzufuegen(ActionEvent e) {
+	public void onSpielStarten() {
+
+		if (spiel.getAlleSpieler().size() > 0) {
+			gameGUI = new GameGUI(spiel);
+			spiel.setGameGUI(gameGUI);
+			spiel.activatePlayerGUI();
+			setVisible(false);
+		} else {
+			zuWenigSpielerError = new ZuWenigSpielerError(this);
+		}
+	}
+
+	/**
+	 * Is activated when "+" is pressed.
+	 */
+	public void onSpielerHinzufuegen() {
 
 		if (name.getText().equals("")) {
 			errorGUI = new ErrorGUI(this);
@@ -104,34 +113,15 @@ public class StartGUI extends JFrame {
 			name.setText(null);
 			alleSpielerPanel.revalidate();
 
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 7; i++) {
 				spieler.fuegeKarteZuHandHinzu(spiel.getSpielstapel().getDeck().get(0));
 				spiel.getSpielstapel().getDeck().remove(0);
 				//System.out.println(austeilstapel.zufaelligeKarte().getPfad()); <-- Zum debuggen, gibt Pfad der Karten aus welche zu Spielerhand hinzugefügt werden
 			}
 		}
-
-		/* Zum Debuggen, gibt Namen aller Spieler im Spielervector aus
-		int i = 0;
-		System.out.println(spiel.getSpieler().get(i).getName());
-		i++;
-		*/
 	}
 
-	/**
-	 * Is activated when "Start" is pressed.
-	 *
-	 * @param e the ActionEvent
-	 */
-	public void onSpielStarten(ActionEvent e) {
-
-		if (spiel.getAlleSpieler().size() > 0) {
-			gameGUI = new GameGUI(spiel);
-			spiel.setGameGUI(gameGUI);
-			spiel.activatePlayerGUI();
-			setVisible(false);
-		} else {
-			zuWenigSpielerError = new ZuWenigSpielerError(this);
-		}
+	public void setNameText(String text) {
+		name.setText(text);
 	}
 }

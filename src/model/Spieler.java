@@ -52,6 +52,10 @@ public class Spieler {
 		hand.remove(karte);
 	}
 
+	public void entferneAlleKarten() {
+		hand.clear();
+	}
+
 	/**
 	 * Gets hand.
 	 *

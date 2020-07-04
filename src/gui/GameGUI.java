@@ -184,9 +184,4 @@ public class GameGUI extends JFrame {
 		winnerGUI = new WinnerGUI(spieler, getSize());
 		setVisible(false);
 	}
-
-	public Dimension getSize() {
-
-		return getContentPane().getSize();
-	}
 }

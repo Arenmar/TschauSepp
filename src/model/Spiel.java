@@ -232,4 +232,8 @@ public class Spiel extends Observable {
 			spielstapel.neuerStapel();
 		}
 	}
+
+	public void setZuletztGelegteKarte(Karte karte) {
+		ablagestapel.getDeck().add(karte);
+	}
 }

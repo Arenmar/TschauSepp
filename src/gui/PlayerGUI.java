@@ -60,14 +60,8 @@ public class PlayerGUI extends JPanel implements Observer {
 		});
 
 		ziehen = new JButton("Ziehen");
-		ziehen.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				spiel.neuesDeck();
-				spiel.zieheKarten(spiel.getEinzelnerSpieler());
-				onZiehen();
-				spiel.setNextPlayer();
-			}
+		ziehen.addActionListener(e -> {
+			onZiehen();
 		});
 
 		rufeTschau = new JButton("Tschau");
@@ -184,7 +178,7 @@ public class PlayerGUI extends JPanel implements Observer {
 
 					for (int i = 0; i < 4; i++) {
 						spiel.zieheKarten(spiel.getEinzelnerSpieler());
-						onZiehen();
+						loadImages();
 					}
 
 					spiel.getEinzelnerSpieler().setHatSepp(false);
@@ -201,14 +195,14 @@ public class PlayerGUI extends JPanel implements Observer {
 
 					for (int i = 0; i < 2; i++) {
 						spiel.zieheKarten(spiel.getEinzelnerSpieler());
-						onZiehen();
+						loadImages();
 					}
 
 					spiel.getEinzelnerSpieler().setHatTschau(false);
 					spiel.setNextPlayer();
 					rufeTschau.setBackground(Color.RED);
 
-				}  else if (spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
+				} else if (spiel.getEinzelnerSpieler().isHatTschau() && spiel.getEinzelnerSpieler().getHand().size() == 2) {
 
 					spiel.spieleKarte(spiel.getEinzelnerSpieler(), kartenListe.getSelectedIndex());
 					spiel.getEinzelnerSpieler().setHatTschau(false);
@@ -234,7 +228,7 @@ public class PlayerGUI extends JPanel implements Observer {
 	/**
 	 * Is activated when "ziehen" is pressed.
 	 */
-	public void onZiehen() {
+	public void loadImages() {
 
 		defaultListModel.removeAllElements();
 		for (Karte karte : spiel.getAlleSpieler().get(index).getHand()) {
@@ -262,7 +256,16 @@ public class PlayerGUI extends JPanel implements Observer {
 	 * @Param e the ActionEvent
 	 */
 	private void onSepp(ActionEvent e) {
+
 		rufeSepp.setBackground(Color.GREEN);
 		spiel.getEinzelnerSpieler().setHatSepp(true);
+	}
+
+	public void onZiehen() {
+
+		spiel.neuesDeck();
+		spiel.zieheKarten(spiel.getEinzelnerSpieler());
+		loadImages();
+		spiel.setNextPlayer();
 	}
 }
